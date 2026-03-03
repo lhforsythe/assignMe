@@ -1,0 +1,15 @@
+services:
+  mysql:
+    build: .
+    container_name: assignmentOrganizer
+    environment:
+      MYSQL_ROOT_PASSWORD: iusearchbtw
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: Snowbell1!
+      MYSQL_DATABASE: user_data
+    ports:
+      - "3306:3306"
+      - "3307:8000"
+    volumes:
+      - ../Database:/var/lib/mysql
+      - ../djangoproject:/usr/src/assignmentOrganizer/djangoproject
