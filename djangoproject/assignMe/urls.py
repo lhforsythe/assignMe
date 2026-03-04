@@ -16,9 +16,13 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from index.views import view
+from main.views import landing
 
 urlpatterns = [
     path("", view, name="index_view"),  # index
+    path("accounts/", include("allauth.urls")),
+    path("accounts/dashboard/", landing, name="main_view"),
 ]
+
