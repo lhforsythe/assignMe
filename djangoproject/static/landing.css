@@ -1,0 +1,52 @@
+/*fonts*/
+@import url('https://fonts.googleapis.com/css2?family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&display=swap');
+
+body {
+    font-family: "Neuton", sans-serif;
+    font-weight: 600;
+    background-color:#262624;
+}
+
+#sessionID {
+    font-family: "Neuton", sans-serif;
+    font-weight: 600;
+    font-size:16px;
+    border-radius:5px;
+    background-color: #bfbdb3;
+    border: none;
+    padding:3px;
+}
+
+#button {
+    background-color: #bfbdb3;
+    color: #262624;
+    font-size: 15px;
+    border: none;
+    border-radius:30px;
+    font-family: "Neuton", sans-serif;
+    font-weight: 600;
+    margin-top:25px;
+    padding: 8px 23px 8px 23px;
+}
+#content {
+    background-color: #30302e;
+    border-radius: 30px;
+    padding-bottom: 50px;
+    padding-left: 150px;
+    padding-right: 150px;
+    padding-top: 25px;
+
+    color: #eae8df;
+}
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top:20%;
+    animation: popup 3s forwards;
+}
+
+@keyframes popup {
+    0% {opacity: 0%;}
+    100% {opacity: 100%;}
+}
