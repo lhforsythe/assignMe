@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&display=swap');
+
+body {
+    font-family: "Neuton", sans-serif;
+    font-weight: 600;
+    background-color: #262624;
+}
+.courseAssign {
+    margin-left: -85px;
+}
+.container div.nav {
+    width:400px;
+    margin:-15px;
+    border-radius:30px;
+    background-color: #1c1717;
+}
+.assignmentContainer {
+    display: flex;
+    margin-left: -15px;
+}
+.assignments {
+    display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+}
+.eachAssignment {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color:white;
+    width:200px;
+    min-height:70px;
+    max-height:70px;
+    background-color: #1c1717;
+    padding: 50px;
+    border-radius:20px;
+    margin:15px;
+}
+.container {
+    height:100vh;
+    display: grid;
+    grid-template-areas:
+        "nav courseAssign";
+}

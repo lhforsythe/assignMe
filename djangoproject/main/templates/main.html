@@ -1,0 +1,37 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <script src="https://kit.fontawesome.com/8ada3cf5e4.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+<div class="container">
+    <div class="nav">
+        <a target="_blank" href="/accounts/refresh"><i class="fa-solid fa-arrows-rotate" style="transform: translate(329px,36px); color: white; opacity: 0.9;"></i></a>
+    </div>
+    <div class="courseAssign">
+        <h1 style="color:white;">Classes and Assignments</h1>
+        <br>
+        {% for course in courses %}
+            <p style="color:white;">{{ course.name }}</p>
+            <div class="assignmentContainer">
+                <div class="assignments">
+                {% for assignment in assignments %}
+                    {% if assignment.course_id.key == course.key and assignment.due < week and assignment.due > today %}
+                            <div class="eachAssignment">
+                                <p>{{ assignment.name }}</p>
+                            </div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+</body>
+</html>

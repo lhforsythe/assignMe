@@ -6,7 +6,11 @@ body {
     font-weight: 600;
     background-color:#262624;
 }
-
+.fa.refresh{
+    transform: translate(329px,36px);
+  color: white;
+  opacity: 0.9;
+}
 #sessionID {
     font-family: "Neuton", sans-serif;
     font-weight: 600;

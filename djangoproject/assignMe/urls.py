@@ -19,10 +19,14 @@ from django.contrib import admin
 from django.urls import path, include
 from index.views import view
 from main.views import landing
+from main.views import main
+from main.views import refresh
 
 urlpatterns = [
     path("", view, name="index_view"),  # index
     path("accounts/", include("allauth.urls")),
-    path("accounts/dashboard/", landing, name="main_view"),
+    path("accounts/setup/", landing, name="landing_view"),
+    path("accounts/dashboard/", main, name="main_view"),
+    path("accounts/refresh/", refresh, name="refresh_view"),
 ]
 
