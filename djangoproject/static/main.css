@@ -5,8 +5,17 @@ body {
     font-weight: 600;
     background-color: #262624;
 }
+.assi-icon {
+    position:absolute;
+    transform: translate(-22px,-37px);
+}
+.assi-icon.row {
+    position:absolute;
+    transform: translate(-35px,-1px);
+}
 .courseAssign {
-    margin-left: -85px;
+    margin-top: 50px;
+    margin-left: 120px;
 }
 .container div.nav {
     width:400px;
@@ -36,9 +45,59 @@ body {
     border-radius:20px;
     margin:15px;
 }
+.eachAssignment.row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: white;
+  width: 800px;
+  min-height: 45px;
+  max-height: 1px;
+  background-color: #1c1717;
+  padding: 0px;
+  border-radius: 20px;
+  margin: 15px;
+  text-align: left;
+  padding-left: 65px !important;
+}
 .container {
-    height:100vh;
+    height:98.5vh;
     display: grid;
     grid-template-areas:
         "nav courseAssign";
+}
+#checkmark_container {
+    background-color: black;
+    width: 200px;
+    height: 70px;
+    position: absolute;
+    padding: 50px;
+    border-radius: 20px;
+    align-self: center;
+    transform: translateY(-50px);
+    opacity:0.8;
+    backdrop-filter: blur(100px);
+}
+#checkmark_icon {
+    position: absolute;
+    align-self: center;
+    font-size: 22px;
+}
+
+#checkmark_container.row {
+  background-color: #1d6c00;
+  width: 123px;
+  height: 30px;
+  position: absolute;
+  padding: 0px;
+  border-radius: 20px;
+  align-self: center;
+  opacity: 0.8;
+  backdrop-filter: blur(100px);
+  transform: translate(309px,8px);
+}
+#checkmark_icon.row {
+  position: absolute;
+  font-size: 14px;
+  transform: translate(52px,-8px);
 }

@@ -1,0 +1,30 @@
+{% load static %}
+{% if isRow == True %}
+    <p class="assi-icon row">
+        {% if assignment.type == "online_quiz" %}📝
+        {% elif assignment.type == "online_upload" or assignment.type == "external_tool" %}📓
+        {% elif assignment.type == "discussion_topic" %}💬
+        {% endif %}
+    </p>
+{% else %}
+    <p class="assi-icon">
+        {% if assignment.type == "online_quiz" %}📝
+        {% elif assignment.type == "online_upload" or assignment.type == "external_tool" %}📓
+        {% elif assignment.type == "discussion_topic" %}💬
+        {% endif %}
+    </p>
+{% endif %}
+<p>{{ assignment.name }}</p>
+{% if isRow == True %}
+    <div id="checkmark_container" class="checkmark_container row"
+         style="display: {% if assignment.completed %} block
+                {% else %} none {% endif %} ;">
+        <p id="checkmark_icon" class="checkmark_icon row">✅</p>
+    </div>
+{% else %}
+    <div id="checkmark_container" class="checkmark_container"
+         style="display: {% if assignment.completed %} block
+                {% else %} none {% endif %} ;">
+        <p id="checkmark_icon" class="checkmark_icon">✅</p>
+    </div>
+{% endif %}

@@ -1,0 +1,68 @@
+
+    {% load static %}
+    <h1 style="color:white;">Classes and Assignments</h1>
+    <br>
+{% for course in courses %}
+    <p style="color:white;">{{ course.name }}</p>
+    <div class="assignmentContainer">
+        <div class="assignments" id="assignments">
+        {% for assignment in assignments %}
+            {% if course.filter == False %}
+                {% if assignment.course_id.key == course.key %}
+                    <form>
+                    {% csrf_token %}
+                    <button style="background:none; border:none;"
+                        hx-post="/accounts/dashboard/completed/"
+                        hx-target="#assignment-{{ assignment.key }}"
+                        hx-swap="innerHTML"
+                        hx-vals='{"assignment_id": "{{ assignment.key }}"}'>
+
+                        <div id="assignment-{{ assignment.key }}" class="eachAssignment">
+                                <p class="assi-icon">
+                                    {% if assignment.type == "online_quiz" %}📝
+                                    {% elif assignment.type == "online_upload" or assignment.type == "external_tool" %}📓
+                                    {% elif assignment.type == "discussion_topic" %}💬
+                                    {% endif %}
+                                </p>
+                             <p>{{ assignment.name }}</p>
+                        <div id="checkmark_container" class="checkmark_container"
+                             style="display: {% if assignment.completed %} block
+                                    {% else %} none {% endif %} ;">
+                            <p id="checkmark_icon" class="checkmark_icon">✅</p>
+                        </div>
+                        </div>
+                    </button>
+                    </form>
+                {% endif %}
+            {% endif %}
+            {% if course.filter == True %}
+                {% if assignment.course_id.key == course.key and assignment.due < week and assignment.due > today %}
+                    <form>
+                    {% csrf_token %}
+                    <button style="background:none; border:none;"
+                        hx-post="/accounts/dashboard/completed/"
+                        hx-target="#assignment-{{ assignment.key }}"
+                        hx-swap="innerHTML"
+                        hx-vals='{"assignment_id": "{{ assignment.key }}"}'>
+
+                        <div id="assignment-{{ assignment.key }}" class="eachAssignment">
+                                <p class="assi-icon">
+                                    {% if assignment.type == "online_quiz" %}📝
+                                    {% elif assignment.type == "online_upload" or assignment.type == "external_tool" %}📓
+                                    {% elif assignment.type == "discussion_topic" %}💬
+                                    {% endif %}
+                                </p>
+                        <div id="checkmark_container" class="checkmark_container"
+                             style="display: {% if assignment.completed %} block
+                                    {% else %} none {% endif %} ;">
+                            <p id="checkmark_icon" class="checkmark_icon">✅</p>
+                        </div>
+                        </div>
+                    </button>
+                    </form>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+{% endfor %}
