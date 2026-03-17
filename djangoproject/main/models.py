@@ -10,10 +10,7 @@ class Classes(models.Model):
     filter = models.BooleanField(default=False)
     isRow = models.BooleanField(default=False)
     class Meta:
-        managed = False
-        db_table = 'classes'
-    class Meta:
-        managed = False #dont touch my table, django
+        managed = True
         db_table = 'classes' #classes table
 class Assignments(models.Model):
     key = models.AutoField(primary_key=True, db_column='id')
@@ -24,6 +21,6 @@ class Assignments(models.Model):
     due = models.DateField(blank=True, null=True)
     completed = models.BooleanField(default=False)
     class Meta:
-        managed = False
+        managed = True
         db_table = 'assignments'
 # Create your models here.

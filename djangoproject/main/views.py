@@ -9,7 +9,7 @@ import requests
 modifyUser = True
 
 def main(request):
-    return render(request, "main.html", {'week': (datetime.now().date()) + timedelta(days=7), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user)})
+    return render(request, "main.html", {'week': (datetime.now().date()) + timedelta(days=7), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
 
 def completed(request):
     assignmentID = request.POST.get("assignment_id")
