@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+    <script src="https://kit.fontawesome.com/8ada3cf5e4.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+    <title>assignMe</title>
+</head>
+<body>
+<ul class = "nav-container">
+  <li class="nav" id="home">
+    <a href="">
+      <i class="fa-solid fa-house" style="color:white; font-size:23px;"></i>
+    </a>
+    <a href="" style="padding-left:20px;">
+      <i class="fa-solid fa-circle-info" style="color:white; font-size:23px;"></i>
+    </a>
+  </li>
+  <li class="nav" id="user">
+    <div class="dropdown" id="dropdown">
+      <button class="user" onclick="clicked()">
+        <i class="fa-solid fa-circle-user" style="color:white; font-size:23px;"></i>
+      </button>
+      <div class="dropdown-content" id="dropdown-content">
+        <a href="/accounts/login">Login<br></a>
+        <a style="" href="/accounts/signup">Sign up</a>
+      </div>
+    </div>
+  </li>
+</ul>
+<div style="position:absolute;display:flex;justify-content:center;width:100%;">
+  <p class="main-text">assignMe</p>
+</div>
+<div style="position:absolute;display:flex;justify-content:center;width:100%;margin-top:95px;">
+  <p class="secondary-text">an assignment manager for canvas and blackboard...yup</p>
+</div>
+<div style="position:absolute;display:flex;justify-content:center;width:100%;margin-top:160px;">
+  <a href="/accounts/signup"><button id="button">Sign Up</button></a>
+</div>
+<div style="display:flex; justify-content: center;">
+  <img class="main-image" src="https://github.com/lhforsythe/assignMe/blob/master/assets/main.png?raw=true">
+</div>
+<script>
+  function clicked() {
+    document.getElementById("dropdown-content").classList.toggle("dropdown-content-show")
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&display=swap');
+.nav-container {
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+}
+.secondary-text {
+    color:white;
+}
+.main-text {
+
+    color:white;
+    font-size:40px;
+}
+#home {
+    background-color: #1c1717;
+    padding:20px;
+    border-radius:100px;
+    margin-left: 700px;
+    max-height: 25px;
+}
+#button {
+    background-color: white;
+    color: #262624;
+    font-size: 15px;
+    border: none;
+    border-radius:30px;
+    font-family: "Neuton", sans-serif;
+    font-weight: 600;
+    margin-top:25px;
+    padding: 8px 23px 8px 23px;
+}
+.dropdown-content {
+display: none;
+  position: absolute;
+  background-color: #1c1717;
+  min-width: 100px;
+  z-index: 1;
+  text-align: center;
+  padding: 20px;
+  min-height: 50px;
+  max-width: 9px;
+  border-radius: 100px;
+  margin-left: -36px;
+  min-width: 65px;
+  margin-left: -17px;
+  margin-top: 10px;
+}
+.dropdown-content-show {
+display: block !important;
+  position: absolute;
+  background-color: #1c1717;
+  min-width: 100px;
+  z-index: 1;
+  text-align: center;
+  padding: 20px;
+  min-height: 50px;
+  max-width: 9px;
+  border-radius: 100px;
+  margin-left: -36px;
+  min-width: 65px;
+  margin-left: -17px;
+  margin-top: 10px;
+}
+.dropdown-content a {
+    color:white;
+}
+.main-image {
+  width: 957px;
+  margin: auto;
+  margin-top: auto;
+  border-radius: 36px;
+  border: #1c1717 solid 8px;
+  margin-top: 431px;
+}
+.nav {
+    text-decoration:none;
+    float: left;
+    padding-top: 18px;
+    padding-left: 662px;
+}
+.user {
+    text-decoration:none;
+    color:white;
+    background-color: #1c1717;
+    padding:20px;
+    border-radius:100px;
+    margin-top:-20px;
+}
+a {
+    text-decoration:none;
+}
+body  {
+    font-family: "Neuton", sans-serif;
+    font-weight: 600;
+    background-color: #262624;
+}

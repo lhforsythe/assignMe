@@ -1,7 +1,7 @@
 services:
   mysql:
-    build: .
-    container_name: assignmentOrganizer
+    image: mysql:8.0.45-debian
+    container_name: assignMe_mysql
     environment:
       MYSQL_ROOT_PASSWORD: iusearchbtw
       MYSQL_USER: admin
@@ -9,7 +9,16 @@ services:
       MYSQL_DATABASE: user_data
     ports:
       - "3306:3306"
-      - "3307:8000"
     volumes:
       - ../Database:/var/lib/mysql
-      - ../djangoproject:/usr/src/assignmentOrganizer/djangoproject
+  web:
+      build: .
+      container_name: assignMe_django
+      ports:
+        - "8000:8000"
+        - "80:80"
+      volumes:
+        - ../djangoproject:/usr/src/assignmentOrganizer/djangoproject
+        - ../webserver:/usr/src/assignmentOrganizer/webserver
+      depends_on:
+        - mysql
