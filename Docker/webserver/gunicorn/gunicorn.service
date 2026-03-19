@@ -1,0 +1,15 @@
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/usr/src/assignmentOrganizer/djangoproject/
+ExecStart=gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/gunicorn.sock \
+          assignMe.wsgi:application
+[Install]
+WantedBy=multi-user.target

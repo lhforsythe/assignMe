@@ -1,0 +1,15 @@
+server {
+    listen 80;
+    listen [::]:80;
+
+    server_name 132.226.52.147 localhost 127.0.0.1 ;
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location /static/ {
+        root /usr/src/assignmentOrganizer/djangoproject/;
+    }
+    location / {
+        include proxy_params;
+        proxy_pass http://127.0.0.1:8000;
+    }
+}
