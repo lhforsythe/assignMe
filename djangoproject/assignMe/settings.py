@@ -25,8 +25,7 @@ SECRET_KEY = "django-insecure-vf5kmcr6l1jjv6cgd@2a%-s71%o(img@6n9!79wp0cp__jo#56
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['132.226.52.147']
 
 # Application definition
 
@@ -148,6 +147,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = '/accounts/dashboard'
 
 #trusted origin
-CSRF_TRUSTED_ORIGINS = ['https://0.0.0.0:8000']
+CSRF_TRUSTED_ORIGINS = ['https://0.0.0.0:8000', 'http://132.226.52.147']
 
 # add socialaccount_providers setting for Google and I guess Discord if I do end up using that as auth method

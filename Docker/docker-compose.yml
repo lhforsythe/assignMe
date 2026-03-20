@@ -10,7 +10,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ../Database:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
   web:
       build: .
       container_name: assignMe_django
@@ -22,3 +22,6 @@ services:
         - ../webserver:/usr/src/assignmentOrganizer/webserver
       depends_on:
         - mysql
+
+volumes:
+  mysql_data:
