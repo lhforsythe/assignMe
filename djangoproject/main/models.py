@@ -15,7 +15,7 @@ class Classes(models.Model):
 class Assignments(models.Model):
     key = models.AutoField(primary_key=True, db_column='id')
     course_id = models.ForeignKey(Classes, on_delete=models.CASCADE, db_column='class_id')
-    name = models.CharField(max_length=100, blank=True, null=True)
+    name = models.CharField(max_length=700, blank=True, null=True)
     type = models.CharField(max_length=100, blank=True, null=True)
     total_points = models.IntegerField(blank=True, null=True)
     due = models.DateField(blank=True, null=True)

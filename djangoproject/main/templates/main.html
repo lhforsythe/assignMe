@@ -37,9 +37,13 @@
         <h1 style="color:white;">Classes and Assignments</h1>
         <br>
         {% for course in courses %}
-            <p style="color:white;">{{ course.name }}</p>
+            <p style="color:white;">{{ course.name }}
+                <button onclick="courseList('assignments{{ course.key }}')" style="background:none; border:none; color:white;">
+                    <i class="fa-solid fa-caret-down"></i>
+                </button>
+            </p>
             <div class="assignmentContainer">
-                <div class="assignments" id="assignments">
+                <div class="assignments" id="assignments{{ course.key }}">
                 {% for assignment in assignments %}
                     {% if course.filter == False %}
                         {% if assignment.course_id.key == course.key %}
@@ -105,6 +109,17 @@
     </div>
 </div>
 <script>
+    let showAssignments = true;
+
+    function courseList(course) {
+        showAssignments = !showAssignments;
+        if (showAssignments === false) {
+           document.getElementById(course).style.display = "none";
+        } else {
+           document.getElementById(course).style.display = "block";
+        }
+
+    }
     let isRow = false;
     function toggleView() {
         isRow = !isRow;

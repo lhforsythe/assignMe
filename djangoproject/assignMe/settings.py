@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-vf5kmcr6l1jjv6cgd@2a%-s71%o(img@6n9!79wp0cp__jo#56
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['132.226.52.147']
+ALLOWED_HOSTS = ['132.226.52.147', 'localhost']
 
 # Application definition
 
@@ -144,7 +144,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR,'static') ]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 #change login redirect page
-LOGIN_REDIRECT_URL = '/accounts/dashboard'
+LOGIN_REDIRECT_URL = '/accounts/setup'
 
 #trusted origin
 CSRF_TRUSTED_ORIGINS = ['https://0.0.0.0:8000', 'http://132.226.52.147']
