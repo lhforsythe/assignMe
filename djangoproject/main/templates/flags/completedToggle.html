@@ -1,27 +1,50 @@
+{% load isDue %}
 {% load static %}
 {% if isRow == True %}
-    <p class="assi-icon row">
+    <a href="{{ assignment.url }}"><p class="assi-icon row">
         {% if assignment.type == "online_quiz" %}📝
         {% elif assignment.type == "online_upload" or assignment.type == "external_tool" %}📓
         {% elif assignment.type == "discussion_topic" %}💬
         {% endif %}
-    </p>
+    </p></a>
 {% else %}
-    <p class="assi-icon">
+    <a href="{{ assignment.url }}"><p class="assi-icon">
         {% if assignment.type == "online_quiz" %}📝
         {% elif assignment.type == "online_upload" or assignment.type == "external_tool" %}📓
         {% elif assignment.type == "discussion_topic" %}💬
         {% endif %}
-    </p>
+    </p></a>
 {% endif %}
 <p>{{ assignment.name }}</p>
 {% if isRow == True %}
+    {% if assignment.due|isDue == 0%}
+        <p class="isDue row" style="background-color:red !important;">DUE!</p>
+    {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
+        <p class="isDue row" style="background-color:#6a6a00 !important;">{{ assignment.due|isDue }} Days</p>
+    {% elif assignment.due|isDue < -1000 %}
+        <p class="isDue row" style="background-color:green !important;">No Due Date :)</p>
+    {% elif assignment.due|isDue < 1 and assignment.due|isDue != -7360 %}
+        <p class="isDue row" style="background-color:cadetblue !important;">PAST DUE!</p>
+    {% else %}
+        <p class="isDue row" style="background-color:green !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
+    {% endif %}
     <div id="checkmark_container" class="checkmark_container row"
          style="display: {% if assignment.completed %} block
                 {% else %} none {% endif %} ;">
         <p id="checkmark_icon" class="checkmark_icon row">✅</p>
     </div>
 {% else %}
+    {% if assignment.due|isDue == 0%}
+        <p class="isDue" style="background-color:red !important;">DUE!</p>
+    {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
+        <p class="isDue" style="background-color:#6a6a00 !important;">{{ assignment.due|isDue }} Days</p>
+    {% elif assignment.due|isDue < -1000 %}
+        <p class="isDue" style="background-color:green !important;">No Due Date :)</p>
+    {% elif assignment.due|isDue < 1 and assignment.due|isDue != -7360 %}
+        <p class="isDue" style="background-color:cadetblue !important;">PAST DUE!</p>
+    {% else %}
+        <p class="isDue" style="background-color:green !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
+    {% endif %}
     <div id="checkmark_container" class="checkmark_container"
          style="display: {% if assignment.completed %} block
                 {% else %} none {% endif %} ;">

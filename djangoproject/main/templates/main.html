@@ -1,10 +1,12 @@
 {% load static %}
+{% load isDue %}
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
     <link rel="stylesheet" href="{% static 'main.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/8ada3cf5e4.js" crossorigin="anonymous"></script>
@@ -14,6 +16,9 @@
 <div class="container">
     <div class="nav">
         {% csrf_token %}
+        <button class="add-stuff">
+            <i class="fa-solid fa-plus" style="font-size: 25px;"></i>
+        </button>
             <button style="background:none; border:none;"
                     onclick="toggleView()"
                     hx-post="/accounts/dashboard/toggleView"
@@ -31,6 +36,7 @@
             </button>
         </form>
         <a target="_blank" href="/accounts/refresh"><i class="fa-solid fa-arrows-rotate" style="transform: translate(325px,24px); color: white; opacity: 0.9;"></i></a>
+        <input type="text" placeholder="search here..." class="search-stuff">
     </div>
     <div class="courseAssign" id="courseAssign">
         {% load static %}
@@ -56,12 +62,23 @@
                                 hx-vals='{"assignment_id": "{{ assignment.key }}"}'>
 
                                 <div id="assignment-{{ assignment.key }}" class="eachAssignment">
-                                        <p class="assi-icon">
+                                    <a href="{{ assignment.url }}"><p class="assi-icon">
                                             {% if assignment.type == "online_quiz" %}📝
                                             {% elif assignment.type == "online_upload" or assignment.type == "external_tool" %}📓
                                             {% elif assignment.type == "discussion_topic" %}💬
                                             {% endif %}
-                                        </p>
+                                    </p></a>
+                                    {% if assignment.due|isDue == 0%}
+                                        <p class="isDue" style="background-color:red !important;">DUE!</p>
+                                    {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
+                                        <p class="isDue" style="background-color:#6a6a00 !important;">{{ assignment.due|isDue }} Days</p>
+                                    {% elif assignment.due|isDue < -1000%}
+                                        <p class="isDue" style="background-color:green !important;">No Due Date :)</p>
+                                    {% elif assignment.due|isDue < 1 and assignment.due|isDue != -7360 %}
+                                        <p class="isDue" style="background-color:cadetblue !important;">PAST DUE!</p>
+                                    {% else %}
+                                        <p class="isDue" style="background-color:green !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
+                                    {% endif %}
                                 <p>{{ assignment.name }}</p>
                                 <div id="checkmark_container" class="checkmark_container"
                                      style="display: {% if assignment.completed %} block
@@ -84,12 +101,23 @@
                                 hx-vals='{"assignment_id": "{{ assignment.key }}"}'>
 
                                 <div id="assignment-{{ assignment.key }}" class="eachAssignment">
-                                        <p class="assi-icon">
+                                        <a href="{{ assignment.url }}"><p class="assi-icon">
                                             {% if assignment.type == "online_quiz" %}📝
                                             {% elif assignment.type == "online_upload" or assignment.type == "external_tool" %}📓
                                             {% elif assignment.type == "discussion_topic" %}💬
                                             {% endif %}
-                                        </p>
+                                        </p></a>
+                                    {% if assignment.due|isDue == 0%}
+                                        <p class="isDue" style="background-color:red !important;">DUE!</p>
+                                    {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
+                                        <p class="isDue" style="background-color:#6a6a00 !important;">{{ assignment.due|isDue }} Days</p>
+                                    {% elif assignment.due|isDue < -1000 %}
+                                        <p class="isDue" style="background-color:green !important;">No Due Date :)</p>
+                                    {% elif assignment.due|isDue < 1 and assignment.due|isDue != -7360 %}
+                                        <p class="isDue" style="background-color:cadetblue !important;">PAST DUE!</p>
+                                    {% else %}
+                                        <p class="isDue" style="background-color:green !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
+                                    {% endif %} <!--pipes assignment due date to isDue function template tag-->
                                 <p>{{ assignment.name }}</p>
                                 <div id="checkmark_container" class="checkmark_container"
                                      style="display: {% if assignment.completed %} block
@@ -123,6 +151,7 @@
     let isRow = false;
     function toggleView() {
         isRow = !isRow;
+        const due = document.querySelectorAll(".isDue");
         const assignments = document.querySelectorAll(".assignments");
         const cards = document.querySelectorAll(".eachAssignment");
         const icons = document.querySelectorAll(".assi-icon");
@@ -140,6 +169,7 @@
         checkmarks.forEach(checkmark => checkmark.classList.toggle("row"));
         checkmarkContainers.forEach(checkmarkContainer =>
             checkmarkContainer.classList.toggle("row"));
+        due.forEach(isDue => isDue.classList.toggle("row"))
     }
 </script>
 </body>

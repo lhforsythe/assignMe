@@ -1,11 +1,15 @@
-
+{% load isDue %}
     {% load static %}
     <h1 style="color:white;">Classes and Assignments</h1>
     <br>
 {% for course in courses %}
-    <p style="color:white;">{{ course.name }}</p>
+    <p style="color:white;">{{ course.name }}
+        <button onclick="courseList('assignments{{ course.key }}')" style="background:none; border:none; color:white;">
+            <i class="fa-solid fa-caret-down"></i>
+        </button>
+     </p>
     <div class="assignmentContainer">
-        <div class="assignments" id="assignments">
+        <div class="assignments" id="assignments{{ course.key }}">
         {% for assignment in assignments %}
             {% if course.filter == False %}
                 {% if assignment.course_id.key == course.key %}
@@ -18,12 +22,23 @@
                         hx-vals='{"assignment_id": "{{ assignment.key }}"}'>
 
                         <div id="assignment-{{ assignment.key }}" class="eachAssignment">
-                                <p class="assi-icon">
+                                <a href="{{ assignment.url }}"><p class="assi-icon">
                                     {% if assignment.type == "online_quiz" %}📝
                                     {% elif assignment.type == "online_upload" or assignment.type == "external_tool" %}📓
                                     {% elif assignment.type == "discussion_topic" %}💬
                                     {% endif %}
-                                </p>
+                                </p></a>
+                                {% if assignment.due|isDue == 0%}
+                                    <p class="isDue" style="background-color:red !important;">DUE!</p>
+                                {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
+                                    <p class="isDue" style="background-color:#6a6a00 !important;">{{ assignment.due|isDue }} Days</p>
+                                {% elif assignment.due|isDue < -1000 %}
+                                    <p class="isDue" style="background-color:green !important;">No Due Date :)</p>
+                                {% elif assignment.due|isDue < 1 and assignment.due|isDue != -7360 %}
+                                    <p class="isDue" style="background-color:cadetblue !important;">PAST DUE!</p>
+                                {% else %}
+                                    <p class="isDue" style="background-color:green !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
+                                {% endif %}
                              <p>{{ assignment.name }}</p>
                         <div id="checkmark_container" class="checkmark_container"
                              style="display: {% if assignment.completed %} block
@@ -46,12 +61,12 @@
                         hx-vals='{"assignment_id": "{{ assignment.key }}"}'>
 
                         <div id="assignment-{{ assignment.key }}" class="eachAssignment">
-                                <p class="assi-icon">
+                                <a href="{{ assignment.url }}"><p class="assi-icon">
                                     {% if assignment.type == "online_quiz" %}📝
                                     {% elif assignment.type == "online_upload" or assignment.type == "external_tool" %}📓
                                     {% elif assignment.type == "discussion_topic" %}💬
                                     {% endif %}
-                                </p>
+                                </p></a>
                         <div id="checkmark_container" class="checkmark_container"
                              style="display: {% if assignment.completed %} block
                                     {% else %} none {% endif %} ;">

@@ -6,10 +6,12 @@ body {
     background-color: #262624;
 }
 .assi-icon {
+    text-decoration: none;
     position:absolute;
     transform: translate(-22px,-37px);
 }
 .assi-icon.row {
+    text-decoration: none;
     position:absolute;
     transform: translate(-35px,-1px);
 }
@@ -92,7 +94,7 @@ body {
   padding: 0px;
   border-radius: 20px;
   align-self: center;
-  opacity: 0.8;
+  opacity: 1;
   backdrop-filter: blur(100px);
   transform: translate(309px,8px);
 }
@@ -100,4 +102,41 @@ body {
   position: absolute;
   font-size: 14px;
   transform: translate(52px,-8px);
+}
+.add-stuff {
+    border: 2px solid rgb(56, 56, 55);
+    color: white;
+    position: absolute;
+    transform: translate(44px,40px);
+    border-radius: 60px;
+    height: 55px;
+    padding: 10px;
+    background-color: #262624;
+}
+.search-stuff {
+    position:absolute;
+    transform: translate(13px,96px);
+    width: 311px;
+    background-color: #262624;
+    border: 2px solid rgb(56, 56, 55);
+    color: white;
+    border-radius: 10px;
+    padding: 10px;
+}
+.isDue {
+    color: white;
+    padding: 5px;
+    border-radius: 9px;
+    font-weight: bold;
+    position: absolute;
+    transform: translate(13px,-41px);
+}
+
+.isDue.row {
+    position: absolute;
+    transform: translate(670px,-4px);
+    color: white;
+    padding: 5px;
+    border-radius: 9px;
+    font-weight: bold;
 }

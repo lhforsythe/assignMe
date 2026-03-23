@@ -20,6 +20,7 @@ class Assignments(models.Model):
     total_points = models.IntegerField(blank=True, null=True)
     due = models.DateField(blank=True, null=True)
     completed = models.BooleanField(default=False)
+    url = models.CharField(max_length=700, blank=True, null=True)
     class Meta:
         managed = True
         db_table = 'assignments'

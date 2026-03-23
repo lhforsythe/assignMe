@@ -9,7 +9,7 @@ import requests
 modifyUser = True
 
 def main(request):
-    return render(request, "main.html", {'week': (datetime.now().date()) + timedelta(days=7), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
+    return render(request, "main.html", {'week': (datetime.now().date()) + timedelta(days=10), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
 
 def completed(request):
     assignmentID = request.POST.get("assignment_id")
@@ -41,12 +41,12 @@ def filter(request):
         for aclass in class_entries:
             aclass.filter = True
             aclass.save()
-        return render(request, "filter/true.html", {'week': (datetime.now().date()) + timedelta(days=7), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user)})
+        return render(request, "filter/true.html", {'week': (datetime.now().date()) + timedelta(days=10), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user)})
     else:
         for aclass in class_entries:
             aclass.filter = False
             aclass.save()
-        return render(request, "filter/false.html", {'week': (datetime.now().date()) + timedelta(days=7), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user)})
+        return render(request, "filter/false.html", {'week': (datetime.now().date()) + timedelta(days=10), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user)})
 
 def get_assignments_canvas(request, user_session):
     sessionCookies = {
@@ -66,6 +66,7 @@ def get_assignments_canvas(request, user_session):
             curAssign.name = assignment["name"]
             curAssign.type = assignment["submission_types"][0]
             curAssign.total_points = assignment["points_possible"]
+            curAssign.url = assignment["html_url"]
 
             if assignment["due_at"] is None:
                 curAssign.due = datetime.strptime("2006-01-26", "%Y-%m-%d").date()
