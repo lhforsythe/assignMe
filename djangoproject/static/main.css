@@ -16,8 +16,8 @@ body {
     transform: translate(-35px,-1px);
 }
 .courseAssign {
-    margin-top: 50px;
-    margin-left: 120px;
+  margin-top: 50px;
+  margin-left: -61px;
 }
 .container div.nav {
     width:400px;
@@ -28,6 +28,7 @@ body {
 .assignmentContainer {
     display: flex;
     margin-left: -15px;
+    max-width: 901px;
 }
 .assignments {
     display: grid;
@@ -139,4 +140,16 @@ body {
     padding: 5px;
     border-radius: 9px;
     font-weight: bold;
+}
+
+.addAssignmentContainer.show {
+    display: block !important;
+    animation: popup 0.5s forwards;
+}
+@keyframes popup {
+    0% {opacity: 0%;}
+    100% {opacity: 100%;}
+}
+@keyframes fade {
+    100% {}
 }
