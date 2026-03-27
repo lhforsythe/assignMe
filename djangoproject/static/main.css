@@ -146,6 +146,10 @@ body {
     display: block !important;
     animation: popup 0.5s forwards;
 }
+#headerInput.show {
+    display: block !important;
+    animation: popup 0.5s forwards;
+}
 @keyframes popup {
     0% {opacity: 0%;}
     100% {opacity: 100%;}

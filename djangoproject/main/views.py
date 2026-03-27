@@ -3,13 +3,14 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import *
 from .models import Classes
 from .models import Assignments
+from .models import Settings
 from datetime import datetime, timedelta
 import requests
 
 modifyUser = True
 
 def main(request):
-    return render(request, "main.html", {'week': (datetime.now().date()) + timedelta(days=10), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
+    return render(request, "main.html", {'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=10), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
 
 def completed(request):
     assignmentID = request.POST.get("assignment_id")
@@ -196,5 +197,12 @@ def addAssignment(request):
         newAssignment.name = assiName
         newAssignment.due = due
         newAssignment.save()
+        return HttpResponseRedirect("/accounts/dashboard/")
+def changeHeader(request):
+    if request.method == 'POST':
+        url = request.POST.get('url')
+        setting = Settings.objects.get(user=request.user)
+        setting.headerImage = url
+        setting.save()
         return HttpResponseRedirect("/accounts/dashboard/")
 # Create your views here.

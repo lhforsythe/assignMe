@@ -24,4 +24,11 @@ class Assignments(models.Model):
     class Meta:
         managed = True
         db_table = 'assignments'
+class Settings(models.Model):
+    key = models.AutoField(primary_key=True, db_column='id')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    headerImage = models.CharField(max_length=700, blank=True, null=True)
+    class Meta:
+        managed = True
+        db_table = 'settings'
 # Create your models here.

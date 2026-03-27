@@ -25,6 +25,7 @@ from main.views import filter
 from main.views import completed
 from main.views import toggleView
 from main.views import addAssignment
+from main.views import changeHeader
 urlpatterns = [
     path("", view, name="index_view"),  # index
     path("accounts/", include("allauth.urls")),
@@ -35,5 +36,6 @@ urlpatterns = [
     path("accounts/dashboard/completed/", completed, name="completed_view"),
     path("accounts/dashboard/toggleView", toggleView, name="toggle_view"),
     path("accounts/dashboard/addAssignment", addAssignment, name="add_assignment"),
+    path("accounts/dashboard/changeHeader", changeHeader, name="change_header"),
 ]
 

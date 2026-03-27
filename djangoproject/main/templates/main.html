@@ -42,6 +42,12 @@
 </div>
 </div>
 <div class="container">
+    <button onclick="toggleHeader()" style="background:none;border:none;">
+        <i class="fa-solid fa-arrow-up-from-bracket" style="color: white;transform: translate(1324px,127px);font-size: 19px;position: absolute;"></i>
+    </button>
+    <form action="/accounts/dashboard/changeHeader" method="POST">
+        <input type="text" name="url" id="headerInput" style="position: absolute;transform: translate(797px,126px);width: 178px;background-color: #262624;border: 2px solid rgb(56, 56, 55);color: white;border-radius: 10px;padding: 10px;max-height: 3px; display:none;">
+    </form>
     <div class="nav">
         {% csrf_token %}
         <button class="add-stuff" onclick="toggleAdd()">
@@ -68,7 +74,7 @@
     </div>
     <div class="courseAssign" id="courseAssign">
         {% load static %}
-        <img style="object-fit: cover;max-height: 225px;width: 1437px;position: absolute;transform: translate(-284px,-107px);z-index: -999;" src="https://images.wallpapersden.com/image/download/just-people-hd-minimal-cool_bWlnZmqUmZqaraWkpJRnamtlrWZpaWU.jpg">
+        <img style="object-fit: cover;max-height: 225px;width: 1437px;position: absolute;transform: translate(-284px,-107px);z-index: -999;" src="{{ headerURL }}">
         <h1 style="color:white;margin-top: 30px;margin-bottom: 76px;text-shadow: 0px 0px 20px black;">Classes and Assignments</h1>
         <br>
         {% for course in courses %}
@@ -168,6 +174,10 @@
     </div>
 </div>
 <script>
+    function toggleHeader() {
+        const input = document.getElementById("headerInput");
+        input.classList.toggle("show");
+    }
     function toggleAdd() {
         const win = document.getElementById("addAssign");
         win.classList.toggle("show");
