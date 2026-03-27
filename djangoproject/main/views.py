@@ -186,4 +186,15 @@ def landing(request):
         if LMS == 'blackboard':
             retrieve_data_blackboard(session_id, request)
     return render(request, "landing.html")
+
+def addAssignment(request):
+    if request.method == 'POST':
+        courseId = request.POST.get('course')
+        assiName = request.POST.get('assiName')
+        due = request.POST.get('duedate')
+        newAssignment = Assignments.objects.create(course_id=Classes.objects.get(key=courseId))
+        newAssignment.name = assiName
+        newAssignment.due = due
+        newAssignment.save()
+        return HttpResponseRedirect("/accounts/dashboard/")
 # Create your views here.

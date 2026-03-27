@@ -27,6 +27,7 @@
                                     {% if assignment.type == "online_quiz" %}📝
                                     {% elif assignment.type == "online_upload" or assignment.type == "external_tool" %}📓
                                     {% elif assignment.type == "discussion_topic" %}💬
+                                    {% else %}📝
                                     {% endif %}
                                 </p></a>
                                 {% if assignment.due|isDue == 0%}
@@ -66,6 +67,7 @@
                                     {% if assignment.type == "online_quiz" %}📝
                                     {% elif assignment.type == "online_upload" or assignment.type == "external_tool" %}📓
                                     {% elif assignment.type == "discussion_topic" %}💬
+                                    {% else %}📝
                                     {% endif %}
                                 </p></a>
                         <div id="checkmark_container" class="checkmark_container"

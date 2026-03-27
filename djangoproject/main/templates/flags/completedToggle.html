@@ -5,6 +5,7 @@
         {% if assignment.type == "online_quiz" %}📝
         {% elif assignment.type == "online_upload" or assignment.type == "external_tool" %}📓
         {% elif assignment.type == "discussion_topic" %}💬
+        {% else %}📝
         {% endif %}
     </p></a>
 {% else %}
@@ -12,6 +13,7 @@
         {% if assignment.type == "online_quiz" %}📝
         {% elif assignment.type == "online_upload" or assignment.type == "external_tool" %}📓
         {% elif assignment.type == "discussion_topic" %}💬
+        {% else %}📝
         {% endif %}
     </p></a>
 {% endif %}
