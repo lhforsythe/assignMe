@@ -58,7 +58,8 @@
                     hx-post="/accounts/dashboard/toggleView"
                     hx-swap="none"
                     hx-vals='js:{"isRow" : isRow}'> <!--get isRow variable from JS and POST it-->
-                <i class="fa-solid fa-table-list" style="transform: translate(225px,62px); color: white; opacity: 0.9; width:40px;font-size: 15px;"></i>
+                <i
+                        class="fa-solid fa-table-list" style="transform: translate(225px,62px); color: white; opacity: 0.9; width:40px;font-size: 15px;"></i>
             </button>
         <form>
             {% csrf_token %}
