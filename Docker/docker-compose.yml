@@ -19,7 +19,7 @@ services:
         - "80:80"
       volumes:
         - ../djangoproject:/usr/src/assignmentOrganizer/djangoproject
-        - ../webserver:/usr/src/assignmentOrganizer/webserver
+        - /webserver:/usr/src/assignmentOrganizer/webserver
       depends_on:
         - mysql
 
