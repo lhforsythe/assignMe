@@ -205,4 +205,4 @@ def changeHeader(request):
         setting.headerImage = url
         setting.save()
         return HttpResponseRedirect("/accounts/dashboard/")
-# Create your views here.
+# Create your views here..
