@@ -42,6 +42,7 @@
 </div>
 </div>
 <div class="container">
+    <img style="object-fit: cover;max-height: 225px;width: 1437px;position: absolute;transform: translate(283px,-53px);z-index: -999;" src="{{ headerURL }}">
     <button onclick="toggleHeader()" style="background:none;border:none;">
         <i class="fa-solid fa-arrow-up-from-bracket" style="color: white;transform: translate(1324px,127px);font-size: 19px;position: absolute;"></i>
     </button>
@@ -75,10 +76,8 @@
     </div>
     <div class="courseAssign" id="courseAssign">
         {% load static %}
-        <img style="object-fit: cover;max-height: 225px;width: 1437px;position: absolute;transform: translate(-284px,-107px);z-index: -999;" src="{{ headerURL }}">
-        <h1 style="color:white;margin-top: 30px;margin-bottom: 76px;text-shadow: 0px 0px 20px black;">Classes and Assignments</h1>
-        <br>
-        {% for course in courses %}
+        <h1 style="color:white;margin-top: 31px;margin-bottom: 76px;text-shadow: 0px 0px 20px black;">Classes and Assignments</h1>
+        <br>        {% for course in courses %}
             <p style="color:white;">{{ course.name }}
                 <button onclick="courseList('assignments{{ course.key }}')" style="background:none; border:none; color:white;">
                     <i class="fa-solid fa-caret-down"></i>

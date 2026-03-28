@@ -24,6 +24,7 @@ body {
     margin:-15px;
     border-radius:30px;
     background-color: #1c1717;
+    min-height: 1000px;
 }
 .assignmentContainer {
     display: flex;
