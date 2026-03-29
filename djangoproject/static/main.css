@@ -25,6 +25,7 @@ body {
     border-radius:30px;
     background-color: #1c1717;
     min-height: 1000px;
+    z-index: 1;
 }
 .assignmentContainer {
     display: flex;
@@ -124,6 +125,31 @@ body {
     color: white;
     border-radius: 10px;
     padding: 10px;
+    z-index: -1;
+}
+#search-results {
+    position: absolute;
+  transform: translate(33px,109px);
+  background-color: #262624;
+  border-left: 2px solid rgb(56, 56, 55);
+  color: white;
+  border-radius: 0px 0px 10px 10px;
+    padding-left: 10px;
+  padding-right: 13px;
+  border-right: 2px solid rgb(56, 56, 55);
+  border-bottom: 2px solid rgb(56, 56, 55);
+  width: 307px;
+  z-index: -2;
+    max-height: 500px;
+  overflow: scroll;
+}
+.result-entry {
+  padding: 8px;
+  margin-top: 10px;
+}
+.result-entry:hover {
+  background-color: #94c8ff4d;
+  border-radius: 8px;
 }
 .isDue {
     color: white;

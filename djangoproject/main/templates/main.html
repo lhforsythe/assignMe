@@ -72,7 +72,8 @@
             </button>
         </form>
         <a target="_blank" href="/accounts/refresh"><i class="fa-solid fa-arrows-rotate" style="transform: translate(325px,24px); color: white; opacity: 0.9;"></i></a>
-        <input type="text" placeholder="search here..." class="search-stuff">
+        <input type="text" placeholder="search here..." class="search-stuff" id="search">
+        <div id="search-results"></div>
     </div>
     <div class="courseAssign" id="courseAssign">
         {% load static %}
@@ -174,6 +175,38 @@
     </div>
 </div>
 <script>
+    //search logic (stores assignment names from database into local js array, have no idea if this is efficient)
+    const assignments = [];
+    {% for assignment in assignments %}
+        assignments.push("{{ assignment.name }}");
+    {% endfor %}
+    const search = document.getElementById("search");
+    const sResults = document.getElementById("search-results");
+
+    search.addEventListener("input", function () {
+       const cInput = search.value.toLowerCase().trim();
+       sResults.innerHTML = "";
+
+       if (cInput === "") return;
+
+       const qResults = assignments.filter(
+           assignment => assignment.toLowerCase().includes(cInput)
+       );
+
+       if (qResults.length === 0) {
+           sResults.innerHTML = "<p>nothing matches :)</p>";
+           return;
+       }
+
+       qResults.forEach(assignment => {
+           const container = document.createElement("div");
+           container.classList.add("result-entry");
+           container.textContent = assignment;
+           sResults.appendChild(container);
+       })
+    });
+
+    //header logic
     function toggleHeader() {
         const input = document.getElementById("headerInput");
         input.classList.toggle("show");
@@ -182,7 +215,7 @@
         const win = document.getElementById("addAssign");
         win.classList.toggle("show");
     }
-
+    // course hide logic
     let showAssignments = true;
 
     function courseList(course) {
@@ -194,6 +227,7 @@
         }
 
     }
+    //row view logic (im sure this is overcomplicated)
     let isRow = false;
     function toggleView() {
         isRow = !isRow;
