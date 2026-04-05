@@ -1,3 +1,4 @@
+from django import template
 from ..models import Assignments
 
 register = template.Library()
