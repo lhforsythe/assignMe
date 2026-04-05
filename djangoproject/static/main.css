@@ -160,6 +160,15 @@ body {
     transform: translate(13px,-41px);
 }
 
+.isDueEntry {
+  color: white;
+  padding: 9px;
+  border-radius: 9px;
+  font-weight: bold;
+  position: absolute;
+  transform: translate(469px,32px);
+  font-size: 21px;
+
 .isDue.row {
     position: absolute;
     transform: translate(670px,-4px);
@@ -173,6 +182,30 @@ body {
     display: block !important;
     animation: popup 0.5s forwards;
 }
+.entryView.show {
+    display: block !important;
+    animation: popup 0.5s forwards;
+}
+.entry.show {
+    display: block !important;
+    animation: popup 0.5s forwards;
+}
+.entryIcon {
+    color: white;
+    font-size: 47px;
+    margin-left: 50px;
+    margin-top: 46px;
+    width: 274px;
+    position: absolute;
+}
+.entryName {
+    color: white;
+    font-size: 22px;
+    margin-left: 131px;
+    margin-top: 46px;
+    width: 274px;
+    position: absolute;
+}
 #headerInput.show {
     display: block !important;
     animation: popup 0.5s forwards;
@@ -180,7 +213,4 @@ body {
 @keyframes popup {
     0% {opacity: 0%;}
     100% {opacity: 100%;}
-}
-@keyframes fade {
-    100% {}
 }
