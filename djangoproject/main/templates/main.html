@@ -1,6 +1,5 @@
 {% load static %}
 {% load isDue %}
-{% load retrieveAssignment %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +7,7 @@
     <meta charset="UTF-8">
     <title>Dashboard</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
-    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/8ada3cf5e4.js" crossorigin="anonymous"></script>
 
@@ -211,32 +210,28 @@
            sResults.innerHTML = "<p>nothing matches :)</p>";
            return;
        }
-
+    //toggle for assignment fly-out
+    function toggleEntry() {
+        const win = document.getElementById("entry");
+        win.classList.toggle("show");
+    }
+    const entryPName = document.getElementById('entryName');
        qResults.forEach(assignment => {
            const container = document.createElement("div");
            container.id = assignment.key;
            container.classList.add("result-entry")
            container.textContent = assignment.name;
+           // add an event listener on each result, so if clicked, it can open up the fly-out
+           container.addEventListener('click', function () {
+            entryPName.innerText = assignment.name;
+            toggleEntry()
+           })
            sResults.appendChild(container);
        })
     });
     // each entry logic for showing popup
-    const entryPName = document.getElementById('entryName');
     const resultEntry = document.getElementsByClassName('result-entry');
 
-    function toggleEntry() {
-        const win = document.getElementById("entry");
-        win.classList.toggle("show");
-    }
-
-    for (const result of resultEntry) {
-        result.addEventListener('click', e => {
-            let key = e.id;
-            let assignment = {{ key|retrieveAssignment }};
-            entryPName.innerText = assignment.name;
-            toggleEntry()
-        })
-    }
     //header logic
     function toggleHeader() {
         const input = document.getElementById("headerInput");

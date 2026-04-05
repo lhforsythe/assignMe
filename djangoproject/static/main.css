@@ -161,13 +161,14 @@ body {
 }
 
 .isDueEntry {
-  color: white;
-  padding: 9px;
-  border-radius: 9px;
-  font-weight: bold;
-  position: absolute;
-  transform: translate(469px,32px);
-  font-size: 21px;
+    color: white;
+    padding: 9px;
+    border-radius: 9px;
+    font-weight: bold;
+    position: absolute;
+    transform: translate(469px, 32px);
+    font-size: 21px;
+}
 
 .isDue.row {
     position: absolute;
@@ -210,6 +211,7 @@ body {
     display: block !important;
     animation: popup 0.5s forwards;
 }
+
 @keyframes popup {
     0% {opacity: 0%;}
     100% {opacity: 100%;}
