@@ -15,18 +15,26 @@
 <body>
 
 <div class="entryView" id="entry" style="display:none; width: 100%;height: 100%;position: fixed;z-index: 998;background-color: rgba(0,0,0,0.8);margin-left: -8px;margin-top: -8px;/*! align-content: center; */">
-    <div class="addAssignment" style="position: fixed;width: 800px;background-color: #262624;z-index: 999;height: 200px;/*! text-align: center; *//*! align-content: center; */transform: translate(49vh, 34vh);border-radius: 49px;">
-    <p class="entryIcon" id="entryIcon" style="">📚</p>
+    <div class="addAssignment" style="position: fixed;
+  width: 800px;
+  background-color: #262624;
+  z-index: 999;
+  height: 155px;
+  text-align: center;
+  align-content: center;
+  transform: translate(49vh, 37vh);
+  border-radius: 49px;">
+    <a href="" id="entryIconA" style="text-decoration: none; position:absolute;"><p class="entryIcon" id="entryIcon" style="">📚</p></a>
     <p class="entryName" id="entryName" style="">Assignment</p>
-    <button onclick="toggleEntry()" style="position:fixed; color:white;background: none;border: none;transform: translate(696px,57px);"><i class="fa-solid fa-circle-xmark" style="font-size:35px;"></i></button>
-    <p class="isDueEntry" id="entryDue" style="">Sometime</p>
+    <button onclick="toggleEntry()" style="position:fixed; color:white;background: none;border: none;transform: translate(296px,-18px);"><i class="fa-solid fa-circle-xmark" style="font-size:35px;"></i></button>
+    <p class="isDueEntry" id="entryDue" class="isDueEntry" style="">Sometime</p>
     </div>
 </div>
 
 <div class="addAssignmentContainer" id="addAssign" style="display:none; width: 100%;height: 100%;position: fixed;z-index: 998;background-color: rgba(0,0,0,0.8);margin-left: -8px;margin-top: -8px;/*! align-content: center; */">
     <div class="addAssignment" style="position: fixed;width: 600px;background-color: #262624;z-index: 999;height: 300px;/*! text-align: center; *//*! align-content: center; */transform: translate(56vh, 31vh);border-radius: 49px;">
   <p style="color: white;font-size: 22px;margin-left: 50px;margin-top: 46px;">Add an Assignment:</p>
-<button onclick="toggleEntry()" style="position:fixed; color:white;background: none;border: none;transform: translate(508px,-64px);"><i class="fa-solid fa-circle-xmark" style="font-size:35px;"></i></button>
+<button onclick="toggleAdd()" style="position:fixed; color:white;background: none;border: none;transform: translate(508px,-64px);"><i class="fa-solid fa-circle-xmark" style="font-size:35px;"></i></button>
 <form action="/accounts/dashboard/addAssignment" method="POST">
   <label for="course-select" style="margin-left: 50px;color: white;font-size: 18px;margin-right: 14px;/*! margin-top: 47px; */">Select a course: </label>
   <select name="course" id="course-select" style="background-color: #e9e9e9;border-radius: 7px;border: none;font-family: &quot;Neuton&quot;, sans-serif;font-size: 14px;">
@@ -190,7 +198,9 @@
     {% for assignment in assignments %}
         assignments.push({
         name: "{{ assignment.name }}",
-        key: "{{ assignment.key }}"
+        key: "{{ assignment.key }}",
+        due: "{{ assignment.due|isDue }}",
+        link: "{{ assignment.url }}"
     });
     {% endfor %}
     const search = document.getElementById("search");
@@ -210,12 +220,9 @@
            sResults.innerHTML = "<p>nothing matches :)</p>";
            return;
        }
-    //toggle for assignment fly-out
-    function toggleEntry() {
-        const win = document.getElementById("entry");
-        win.classList.toggle("show");
-    }
     const entryPName = document.getElementById('entryName');
+    const entryPDue = document.getElementById('entryDue');
+    const entryAIcon = document.getElementById('entryIconA')
        qResults.forEach(assignment => {
            const container = document.createElement("div");
            container.id = assignment.key;
@@ -224,6 +231,20 @@
            // add an event listener on each result, so if clicked, it can open up the fly-out
            container.addEventListener('click', function () {
             entryPName.innerText = assignment.name;
+            if (assignment.due === 0) {
+                entryPDue.bold;innerText = "DUE!";
+                entryPDue.classList.add("duenow");
+            } else if (assignment.due < 4 && assignment.due > 0) {
+                entryPDue.innerText = assignment.due.toString() + " Days";
+                entryPDue.classList.add("duesoon");
+            } else if (assignment.due < 1 && assignment.due !== -7360) {
+                entryPDue.innerText = "PAST DUE!";
+                entryPDue.classList.add("overdue");
+            } else {
+               entryPDue.innerText = assignment.due.toString() + " Days";
+               entryPDue.classList.add("notdue");
+            }
+            entryAIcon.setAttribute("href", assignment.link);
             toggleEntry()
            })
            sResults.appendChild(container);
@@ -231,7 +252,11 @@
     });
     // each entry logic for showing popup
     const resultEntry = document.getElementsByClassName('result-entry');
-
+    //toggle for assignment fly-out
+    function toggleEntry() {
+        const win = document.getElementById("entry");
+        win.classList.toggle("show");
+    }
     //header logic
     function toggleHeader() {
         const input = document.getElementById("headerInput");

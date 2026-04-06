@@ -159,15 +159,30 @@ body {
     position: absolute;
     transform: translate(13px,-41px);
 }
+.notdue {
+    background-color:green;
+}
+.duenow {
+    background-color:red;
+}
+
+.duesoon {
+    background-color:#6a6a00;
+}
+
+.overdue {
+    background-color:cadetblue;
+}
 
 .isDueEntry {
     color: white;
     padding: 9px;
     border-radius: 9px;
-    font-weight: bold;
+    font-weight: 600;
     position: absolute;
-    transform: translate(469px, 32px);
+    transform: translate(500px, -45px);
     font-size: 21px;
+    font-family: Verdana, sans-serif;
 }
 
 .isDue.row {
@@ -194,8 +209,8 @@ body {
 .entryIcon {
     color: white;
     font-size: 47px;
-    margin-left: 50px;
-    margin-top: 46px;
+    margin-left: -443px;
+    margin-top: -30px;
     width: 274px;
     position: absolute;
 }
@@ -203,7 +218,7 @@ body {
     color: white;
     font-size: 22px;
     margin-left: 131px;
-    margin-top: 46px;
+    margin-top: -31px;
     width: 274px;
     position: absolute;
 }
