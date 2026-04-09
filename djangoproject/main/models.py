@@ -31,4 +31,13 @@ class Settings(models.Model):
     class Meta:
         managed = True
         db_table = 'settings'
+class Modules(models.Model):
+    key = models.AutoField(primary_key=True, db_column='id')
+    assignmentID = models.ForeignKey(Assignments, on_delete=models.CASCADE)
+    name = models.CharField(max_length=700, blank=True, null=True)
+    url = models.CharField(max_length=700, blank=True, null=True)
+    type = models.CharField(max_length=100, blank=True, null=True)
+    class Meta:
+        managed = True
+        db_table = 'modules'
 # Create your models here.

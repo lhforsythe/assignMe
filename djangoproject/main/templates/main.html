@@ -1,5 +1,6 @@
 {% load static %}
 {% load isDue %}
+{% load getModuleItems %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,15 +20,21 @@
   width: 800px;
   background-color: #262624;
   z-index: 999;
-  height: 155px;
+  height: 500px;
   text-align: center;
   align-content: center;
-  transform: translate(49vh, 37vh);
+  transform: translate(49vh, 28vh);
   border-radius: 49px;">
+    <div style="margin-top: -335px;">
     <a href="" id="entryIconA" style="text-decoration: none; position:absolute;"><p class="entryIcon" id="entryIcon" style="">📚</p></a>
     <p class="entryName" id="entryName" style="">Assignment</p>
-    <button onclick="toggleEntry()" style="position:fixed; color:white;background: none;border: none;transform: translate(296px,-18px);"><i class="fa-solid fa-circle-xmark" style="font-size:35px;"></i></button>
+    <hr style="margin-top: 76px;position: absolute;width: 798px;">
+    <p style="color: white;font-size: 22px;margin-left: 72px;margin-top: 107px;width: 274px;position: absolute;text-align: left;" id="" class="">Prerequisites:</p>
+    <ul id="modules" style="color: white;position: fixed;transform: translate(47px, 134px);">
+    </ul>
+    <button onclick="toggleEntry()" style="position:fixed; color:white;background: none;border: none;transform: translate(281px,-21px);"><i class="fa-solid fa-circle-xmark" style="font-size:35px;"></i></button>
     <p class="isDueEntry" id="entryDue" class="isDueEntry" style="">Sometime</p>
+    </div>
     </div>
 </div>
 
@@ -195,13 +202,23 @@
 <script>
     //search logic (stores assignment names from database into local js array, have no idea if this is efficient)
     const assignments = [];
+    const moduleItems = {};
     {% for assignment in assignments %}
         assignments.push({
         name: "{{ assignment.name }}",
-        key: "{{ assignment.key }}",
+        key: parseInt("{{ assignment.key }}"),
         due: "{{ assignment.due|isDue }}",
         link: "{{ assignment.url }}"
     });
+        moduleItems[parseInt("{{ assignment.key }}")] = [];
+        console.log("{{ assignment.key }}")
+        {% for item in assignment.key|getModuleItems %}
+            moduleItems["{{ assignment.key }}"].push({
+                name: "{{ item.name }}",
+                link: "{{ item.url }}",
+                type: "{{ item.type }}"
+    });
+        {% endfor %}
     {% endfor %}
     const search = document.getElementById("search");
     const sResults = document.getElementById("search-results");
@@ -222,7 +239,9 @@
        }
     const entryPName = document.getElementById('entryName');
     const entryPDue = document.getElementById('entryDue');
-    const entryAIcon = document.getElementById('entryIconA')
+    const entryAIcon = document.getElementById('entryIconA');
+    const modules = document.getElementById('modules');
+
        qResults.forEach(assignment => {
            const container = document.createElement("div");
            container.id = assignment.key;
@@ -232,7 +251,7 @@
            container.addEventListener('click', function () {
             entryPName.innerText = assignment.name;
             if (assignment.due === 0) {
-                entryPDue.bold;innerText = "DUE!";
+                entryPDue.innerText = "DUE!";
                 entryPDue.classList.add("duenow");
             } else if (assignment.due < 4 && assignment.due > 0) {
                 entryPDue.innerText = assignment.due.toString() + " Days";
@@ -245,6 +264,17 @@
                entryPDue.classList.add("notdue");
             }
             entryAIcon.setAttribute("href", assignment.link);
+            // display module items (prerequisites)
+               console.log(assignment.key)
+               modules.innerHTML = "";
+               for (const module of moduleItems[assignment.key]) {
+                   if (module.type === "Page" || module.type === "ExternalTool" || module.type === "File") {
+                       const listItem = document.createElement("li");
+                       listItem.classList.add("modules");
+                       listItem.innerText = module.name;
+                       modules.appendChild(listItem)
+                   }
+               }
             toggleEntry()
            })
            sResults.appendChild(container);
@@ -257,6 +287,7 @@
         const win = document.getElementById("entry");
         win.classList.toggle("show");
     }
+
     //header logic
     function toggleHeader() {
         const input = document.getElementById("headerInput");

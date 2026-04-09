@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import *
 from .models import Classes
 from .models import Assignments
 from .models import Settings
+from .models import Modules
 from datetime import datetime, timedelta
 import requests
 
@@ -49,6 +50,30 @@ def filter(request):
             aclass.save()
         return render(request, "filter/false.html", {'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=10), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user)})
 
+def get_module_info(user_session, curAssign, assignmentID, classID):
+    entries = Modules.objects
+    sessionCookies = {
+        "canvas_session": user_session
+    }
+
+    moduleData = requests.get("https://canvas.liberty.edu/api/v1/courses/" + str(classID) + "/module_item_sequence?asset_type=Assignment&asset_id=" + str(assignmentID), cookies=sessionCookies).json()
+    try: # basically, if it can't find any module item associated with assignment, just skip it rather than halting the whole program. This occured for me for some reason, not sure if this is a real issue in production though.
+        moduleID = moduleData["modules"][0]["id"]
+    except IndexError:
+        return 0
+
+    moduleItems = requests.get("https://canvas.liberty.edu/api/v1/courses/" + str(classID) + "/modules/" + str(moduleID) + "/items", cookies=sessionCookies).json()
+    Exception(moduleItems)
+    for item in moduleItems:
+        itemData = entries.create(assignmentID=curAssign)
+        itemData.name = item["title"]
+        try: # apparently, not all module tasks have a URL?
+            itemData.url = item["html_url"]
+        except KeyError:
+            itemData.url = ""
+        itemData.type = item["type"]
+        itemData.save()
+
 def get_assignments_canvas(request, user_session):
     sessionCookies = {
         "canvas_session": user_session
@@ -68,12 +93,11 @@ def get_assignments_canvas(request, user_session):
             curAssign.type = assignment["submission_types"][0]
             curAssign.total_points = assignment["points_possible"]
             curAssign.url = assignment["html_url"]
-
+            get_module_info(user_session, curAssign, assignment["id"], aclass.course_id)
             if assignment["due_at"] is None:
                 curAssign.due = datetime.strptime("2006-01-26", "%Y-%m-%d").date()
             else:
                 curAssign.due = datetime.strptime(str(assignment["due_at"])[:10], "%Y-%m-%d").date()
-
             curAssign.save()
     return HttpResponseRedirect("/accounts/dashboard/")
 

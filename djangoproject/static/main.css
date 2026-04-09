@@ -180,7 +180,7 @@ body {
     border-radius: 9px;
     font-weight: 600;
     position: absolute;
-    transform: translate(500px, -45px);
+    transform: translate(450px, -45px);
     font-size: 21px;
     font-family: Verdana, sans-serif;
 }
@@ -217,14 +217,19 @@ body {
 .entryName {
     color: white;
     font-size: 22px;
-    margin-left: 131px;
+    margin-left: 159px;
     margin-top: -31px;
     width: 274px;
     position: absolute;
+    text-align: left;
 }
 #headerInput.show {
     display: block !important;
     animation: popup 0.5s forwards;
+}
+.modules {
+  text-align: left;
+  padding: 10px;
 }
 
 @keyframes popup {
