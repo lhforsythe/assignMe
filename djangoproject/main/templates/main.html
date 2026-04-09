@@ -269,10 +269,14 @@
                modules.innerHTML = "";
                for (const module of moduleItems[assignment.key]) {
                    if (module.type === "Page" || module.type === "ExternalTool" || module.type === "File") {
+                       const linkItem = document.createElement("a");
                        const listItem = document.createElement("li");
                        listItem.classList.add("modules");
+                       linkItem.classList.add("modules-link");
+                       linkItem.setAttribute("href", module.link);
                        listItem.innerText = module.name;
-                       modules.appendChild(listItem)
+                       linkItem.appendChild(listItem);
+                       modules.appendChild(linkItem);
                    }
                }
             toggleEntry()

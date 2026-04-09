@@ -173,7 +173,10 @@ body {
 .overdue {
     background-color:cadetblue;
 }
-
+.modules-link {
+    text-decoration: underline;
+    color: white;
+}
 .isDueEntry {
     color: white;
     padding: 9px;
