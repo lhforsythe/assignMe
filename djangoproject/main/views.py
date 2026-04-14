@@ -18,10 +18,16 @@ def generateJson(request):
     assignList = []
     for course in Classes.objects.filter(user=request.user):
         for assignment in Assignments.objects.filter(course_id=course.key):
+            if assignment.completed:
+                assiColor = "green"
+            else:
+                assiColor = "grey"
             assignList.append({
                 'title': assignment.name,
                 'start': assignment.due,
-                'end': assignment.due
+                'end': assignment.due,
+                'color': assiColor,
+                'url': assignment.url,
             })
     return JsonResponse(assignList, safe=False)
 
