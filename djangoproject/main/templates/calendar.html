@@ -9,9 +9,16 @@
     <title>Dashboard</title>
     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+    <!--HTMX-->
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
+    <!--fontAwesome-->
     <script src="https://kit.fontawesome.com/8ada3cf5e4.js" crossorigin="anonymous"></script>
-
+    <!--fullcalendar-->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js'></script>
+    <!--bootstrap
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet'>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
+-->
 </head>
 <body>
 
@@ -69,7 +76,7 @@
 <div class="container">
     <img style="object-fit: cover;max-height: 225px;width: 1437px;position: absolute;transform: translate(283px,-53px);z-index: -999;" src="{{ headerURL }}">
     <button onclick="toggleHeader()" style="background:none;border:none;">
-        <i class="fa-solid fa-arrow-up-from-bracket" style="color: white;transform: translate(1324px,127px);font-size: 19px;position: absolute;"></i>
+        <i class="fa-solid fa-arrow-up-from-bracket" style="color: white;transform: translate(1103px,127px);font-size: 19px;position: absolute;"></i>
     </button>
     <form action="/accounts/dashboard/changeHeader" method="POST">
         <input type="text" name="url" id="headerInput" style="position: absolute;transform: translate(797px,126px);width: 178px;background-color: #262624;border: 2px solid rgb(56, 56, 55);color: white;border-radius: 10px;padding: 10px;max-height: 3px; display:none;">
@@ -80,10 +87,10 @@
             <i class="fa-solid fa-plus" style="font-size: 25px;"></i>
         </button>
         <hr style="position: absolute;margin-top: 246px;width: 398px;opacity: 0.4;">
-        <button class="" style=" transform: translate(33px,313px);width: 335px;background-color: #5d5d54;border: 2px solid rgb(56, 56, 55);color: white;border-radius: 10px;padding: 10px;z-index: -1;height: 52px;position: absolute;" onclick="window.location.href='/accounts/dashboard/'">
+        <button class="" style=" transform: translate(33px,313px);width: 335px;background-color: #262624;border: 2px solid rgb(56, 56, 55);color: white;border-radius: 10px;padding: 10px;z-index: -1;height: 52px;position: absolute;" onclick="window.location.href='/accounts/dashboard/'">
             <p style="font-family: 'Neuton', sans-serif; color: rgb(223, 223, 223);font-weight: 700;font-size: 16px;position: absolute;margin-top: -10px;margin-left: 10px;">Dashboard</p>
         </button>
-        <button class="" style=" transform: translate(33px,377px);width: 335px;background-color: #262624;border: 2px solid rgb(56, 56, 55);color: white;border-radius: 10px;padding: 10px;z-index: -1;height: 52px;position: absolute;" onclick="window.location.href='/accounts/calendar/'">
+        <button class="" style=" transform: translate(33px,377px);width: 335px;background-color: #5d5d54;border: 2px solid rgb(56, 56, 55);color: white;border-radius: 10px;padding: 10px;z-index: -1;height: 52px;position: absolute;" onclick="window.location.href='/accounts/calendar/'">
             <p style="font-family: 'Neuton', sans-serif; color: rgb(223, 223, 223);font-weight: 700;font-size: 16px;position: absolute;margin-top: -10px;margin-left: 10px;">Calendar</p>
         </button>
             <button style="background:none; border:none;"
@@ -107,104 +114,11 @@
         <input type="text" placeholder="search here..." class="search-stuff" id="search">
         <div id="search-results"></div>
     </div>
-    <div class="courseAssign" id="courseAssign">
+     <div class="courseAssign" id="courseAssign">
         {% load static %}
-        <h1 style="color:white;margin-top: 31px;margin-bottom: 76px;text-shadow: 0px 0px 20px black;">Classes and Assignments</h1>
-        <br>        {% for course in courses %}
-            <p style="color:white;">{{ course.name }}
-                <button onclick="courseList('assignments{{ course.key }}')" style="background:none; border:none; color:white;">
-                    <i class="fa-solid fa-caret-down"></i>
-                </button>
-            </p>
-            <div class="assignmentContainer">
-                <div class="assignments" id="assignments{{ course.key }}">
-                {% for assignment in assignments %}
-                    {% if course.filter == False %}
-                        {% if assignment.course_id.key == course.key %}
-                            <form>
-                            {% csrf_token %}
-                            <button style="background:none; border:none;"
-                                hx-post="/accounts/dashboard/completed/"
-                                hx-target="#assignment-{{ assignment.key }}"
-                                hx-swap="innerHTML"
-                                hx-vals='{"assignment_id": "{{ assignment.key }}"}'>
-
-                                <div id="assignment-{{ assignment.key }}" class="eachAssignment">
-                                    <a href="{{ assignment.url }}"><p class="assi-icon">
-                                            {% if assignment.type == "online_quiz" %}📝
-                                            {% elif assignment.type == "online_upload" or assignment.type == "external_tool" %}📓
-                                            {% elif assignment.type == "discussion_topic" %}💬
-                                            {% else %}📝
-                                            {% endif %}
-                                    </p></a>
-                                    {% if assignment.due|isDue == 0%}
-                                        <p class="isDue" style="background-color:red !important;">DUE!</p>
-                                    {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
-                                        <p class="isDue" style="background-color:#6a6a00 !important;">{{ assignment.due|isDue }} Days</p>
-                                    {% elif assignment.due|isDue < -1000%}
-                                        <p class="isDue" style="background-color:green !important;">No Due Date :)</p>
-                                    {% elif assignment.due|isDue < 1 and assignment.due|isDue != -7360 %}
-                                        <p class="isDue" style="background-color:cadetblue !important;">PAST DUE!</p>
-                                    {% else %}
-                                        <p class="isDue" style="background-color:green !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
-                                    {% endif %}
-                                <p>{{ assignment.name }}</p>
-                                <div id="checkmark_container" class="checkmark_container"
-                                     style="display: {% if assignment.completed %} block
-                                            {% else %} none {% endif %} ;">
-                                    <p id="checkmark_icon" class="checkmark_icon">✅</p>
-                                </div>
-                                </div>
-                            </button>
-                            </form>
-                        {% endif %}
-                    {% endif %}
-                    {% if course.filter == True %}
-                        {% if assignment.course_id.key == course.key and assignment.due < week and assignment.due > today %}
-                            <form>
-                            {% csrf_token %}
-                            <button style="background:none; border:none;"
-                                hx-post="/accounts/dashboard/completed/"
-                                hx-target="#assignment-{{ assignment.key }}"
-                                hx-swap="innerHTML"
-                                hx-vals='{"assignment_id": "{{ assignment.key }}"}'>
-
-                                <div id="assignment-{{ assignment.key }}" class="eachAssignment">
-                                        <a href="{{ assignment.url }}"><p class="assi-icon">
-                                            {% if assignment.type == "online_quiz" %}📝
-                                            {% elif assignment.type == "online_upload" or assignment.type == "external_tool" %}📓
-                                            {% elif assignment.type == "discussion_topic" %}💬
-                                            {% else %}📝
-                                            {% endif %}
-                                        </p></a>
-                                    {% if assignment.due|isDue == 0%}
-                                        <p class="isDue" style="background-color:red !important;">DUE!</p>
-                                    {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
-                                        <p class="isDue" style="background-color:#6a6a00 !important;">{{ assignment.due|isDue }} Days</p>
-                                    {% elif assignment.due|isDue < -1000 %}
-                                        <p class="isDue" style="background-color:green !important;">No Due Date :)</p>
-                                    {% elif assignment.due|isDue < 1 and assignment.due|isDue != -7360 %}
-                                        <p class="isDue" style="background-color:cadetblue !important;">PAST DUE!</p>
-                                    {% else %}
-                                        <p class="isDue" style="background-color:green !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
-                                    {% endif %} <!--pipes assignment due date to isDue function template tag-->
-                                <p>{{ assignment.name }}</p>
-                                <div id="checkmark_container" class="checkmark_container"
-                                     style="display: {% if assignment.completed %} block
-                                            {% else %} none {% endif %} ;">
-                                    <p id="checkmark_icon" class="checkmark_container">✅</p>
-                                </div>
-                                </div>
-                            </button>
-                            </form>
-
-                        {% endif %}
-                    {% endif %}
-                {% endfor %}
-                </div>
-            </div>
-        {% endfor %}
-    </div>
+        <h1 style="color:white;margin-top: 31px;margin-bottom: 76px; margin-left: -378px; text-shadow: 0px 0px 20px black;">Calendar:</h1>
+        <div id="calendar"></div>
+     </div>
 </div>
 <script>
     //search logic (stores assignment names from database into local js array, have no idea if this is efficient)
@@ -308,42 +222,21 @@
         const win = document.getElementById("addAssign");
         win.classList.toggle("show");
     }
-    // course hide logic
-    let showAssignments = true;
+    // calendar logic
+    document.addEventListener('DOMContentLoaded', function() {
+      var calendarEl = document.getElementById('calendar');
 
-    function courseList(course) {
-        showAssignments = !showAssignments;
-        if (showAssignments === false) {
-           document.getElementById(course).style.display = "none";
-        } else {
-           document.getElementById(course).style.display = "block";
-        }
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        timeZone: 'UTC',
+        initialView: 'dayGridMonth',
+        events: '/accounts/data',
+        editable: false,
+        selectable: true,
+        themeSystem: 'bootstrap5'
+      });
 
-    }
-    //row view logic (im sure this is overcomplicated)
-    let isRow = false;
-    function toggleView() {
-        isRow = !isRow;
-        const due = document.querySelectorAll(".isDue");
-        const assignments = document.querySelectorAll(".assignments");
-        const cards = document.querySelectorAll(".eachAssignment");
-        const icons = document.querySelectorAll(".assi-icon");
-        const checkmarks = document.querySelectorAll(".checkmark_icon");
-        const checkmarkContainers = document.querySelectorAll(".checkmark_container");
-        if (isRow) {
-            assignments.forEach(assignment =>
-                assignment.style.gridTemplateColumns = "repeat(1, 1fr)");
-        } else {
-            assignments.forEach(assignment =>
-                assignment.style.gridTemplateColumns = "repeat(3, 1fr)");
-        }
-        icons.forEach(icon => icon.classList.toggle("row"));
-        cards.forEach(card => card.classList.toggle("row"));
-        checkmarks.forEach(checkmark => checkmark.classList.toggle("row"));
-        checkmarkContainers.forEach(checkmarkContainer =>
-            checkmarkContainer.classList.toggle("row"));
-        due.forEach(isDue => isDue.classList.toggle("row"))
-    }
+      calendar.render();
+    });
 </script>
 </body>
 </html>

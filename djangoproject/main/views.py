@@ -1,6 +1,7 @@
 from django.shortcuts import HttpResponse, render
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import *
+from django.http import JsonResponse
 from .models import Classes
 from .models import Assignments
 from .models import Settings
@@ -12,6 +13,17 @@ modifyUser = True
 
 def main(request):
     return render(request, "main.html", {'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=10), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
+
+def generateJson(request):
+    assignList = []
+    for course in Classes.objects.filter(user=request.user):
+        for assignment in Assignments.objects.filter(course_id=course.key):
+            assignList.append({
+                'title': assignment.name,
+                'start': assignment.due,
+                'end': assignment.due
+            })
+    return JsonResponse(assignList, safe=False)
 
 def completed(request):
     assignmentID = request.POST.get("assignment_id")
@@ -95,10 +107,12 @@ def get_assignments_canvas(request, user_session):
             curAssign.url = assignment["html_url"]
             get_module_info(user_session, curAssign, assignment["id"], aclass.course_id)
             if assignment["due_at"] is None:
-                curAssign.due = datetime.strptime("2006-01-26", "%Y-%m-%d").date()
+                dueDate = datetime.strptime("2006-01-26", "%Y-%m-%d").date()
             else:
-                curAssign.due = datetime.strptime(str(assignment["due_at"])[:10], "%Y-%m-%d").date()
+                dueDate = datetime.strptime(str(assignment["due_at"])[:10], "%Y-%m-%d").date()
+            curAssign.due = dueDate
             curAssign.save()
+            generateJson(request)
     return HttpResponseRedirect("/accounts/dashboard/")
 
 def get_classes_canvas(data, request, user_session):
@@ -212,6 +226,9 @@ def landing(request):
             retrieve_data_blackboard(session_id, request)
     return render(request, "landing.html")
 
+def calendar(request):
+    return render(request, "calendar.html", {'userID': request.user.id, 'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=10), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
+
 def addAssignment(request):
     if request.method == 'POST':
         courseId = request.POST.get('course')
@@ -221,6 +238,7 @@ def addAssignment(request):
         newAssignment.name = assiName
         newAssignment.due = due
         newAssignment.save()
+        generateJson(request)
         return HttpResponseRedirect("/accounts/dashboard/")
 def changeHeader(request):
     if request.method == 'POST':

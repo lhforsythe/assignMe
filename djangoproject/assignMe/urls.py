@@ -26,6 +26,8 @@ from main.views import completed
 from main.views import toggleView
 from main.views import addAssignment
 from main.views import changeHeader
+from main.views import calendar
+from main.views import generateJson
 urlpatterns = [
     path("", view, name="index_view"),  # index
     path("accounts/", include("allauth.urls")),
@@ -37,5 +39,7 @@ urlpatterns = [
     path("accounts/dashboard/toggleView", toggleView, name="toggle_view"),
     path("accounts/dashboard/addAssignment", addAssignment, name="add_assignment"),
     path("accounts/dashboard/changeHeader", changeHeader, name="change_header"),
+    path("accounts/calendar/", calendar, name="calendar"),
+    path("accounts/data/", generateJson, name="generate_json")
 ]
 

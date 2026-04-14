@@ -239,3 +239,9 @@ body {
     0% {opacity: 0%;}
     100% {opacity: 100%;}
 }
+#calendar {
+    transform: translate(33px,20px);
+  color: white;
+    width:1100px;
+    height:740px;
+}
