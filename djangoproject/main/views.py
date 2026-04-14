@@ -113,9 +113,9 @@ def get_assignments_canvas(request, user_session):
             curAssign.url = assignment["html_url"]
             get_module_info(user_session, curAssign, assignment["id"], aclass.course_id)
             if assignment["due_at"] is None:
-                dueDate = datetime.strptime("2006-01-26", "%Y-%m-%d").date()
+                dueDate = datetime.strptime("2006-01-26", "%Y-%m-%d").date() - timedelta(days=1)
             else:
-                dueDate = datetime.strptime(str(assignment["due_at"])[:10], "%Y-%m-%d").date()
+                dueDate = datetime.strptime(str(assignment["due_at"])[:10], "%Y-%m-%d").date() - timedelta(days=1)
             curAssign.due = dueDate
             curAssign.save()
             generateJson(request)
