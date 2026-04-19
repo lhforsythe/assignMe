@@ -148,6 +148,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = '/accounts/setup'
 
 #trusted origin
-CSRF_TRUSTED_ORIGINS = ['https://0.0.0.0:8000', 'http://132.226.52.147']
+CSRF_TRUSTED_ORIGINS = ['https://0.0.0.0:8000', 'http://132.226.52.147', 'http://assignme.fyi']
 
 # add socialaccount_providers setting for Google and I guess Discord if I do end up using that as auth method

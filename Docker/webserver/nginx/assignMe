@@ -2,7 +2,7 @@ server {
     listen 80;
     listen [::]:80;
 
-    server_name 132.226.52.147 localhost 127.0.0.1 ;
+    server_name 132.226.52.147 localhost 127.0.0.1 assignme.fyi;
 
     location = /favicon.ico { access_log off; log_not_found off; }
     location /static/ {
