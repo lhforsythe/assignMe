@@ -140,8 +140,8 @@ def get_classes_canvas(data, request, user_session):
     get_assignments_canvas(request, user_session)
 
 def refresh(request):
-    global modifyUser
-    modifyUser = True
+    for course in Classes.objects.filter(user=request.user):
+        course.delete()
     return HttpResponseRedirect("/accounts/setup/")
 
 def retrieve_data_canvas(user_session, request):
@@ -218,20 +218,18 @@ def retrieve_data_blackboard(user_session, request):
 @login_required
 
 def landing(request):
-    global modifyUser
-    if not modifyUser:
-        main(request)
-        return HttpResponseRedirect("/accounts/dashboard/")
-    elif request.method == 'POST':
-        modifyUser = False
-        LMS = request.POST.get('LMS')
-        session_id = request.POST.get('session_id', '')
-        if LMS == 'canvas':
-            retrieve_data_canvas(session_id, request)
-        if LMS == 'blackboard':
-            retrieve_data_blackboard(session_id, request)
-    return render(request, "landing.html")
-
+    if Classes.objects.filter(user=request.user).count() < 1:
+        if request.method == 'POST':
+            LMS = request.POST.get('LMS')
+            session_id = request.POST.get('session_id', '')
+            if LMS == 'canvas':
+                retrieve_data_canvas(session_id, request)
+            if LMS == 'blackboard':
+                retrieve_data_blackboard(session_id, request)
+                # below is confusing, basically:
+            return HttpResponseRedirect("/accounts/dashboard/") # if submit is clicked on setup load, then redirect to dashboard
+        return render(request, "landing.html") # else, it should load the setup page
+    return HttpResponseRedirect("/accounts/dashboard/") # otherwise, if there is one or more classes attributed to user, then redirect to dashboard
 def calendar(request):
     return render(request, "calendar.html", {'userID': request.user.id, 'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=10), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
 

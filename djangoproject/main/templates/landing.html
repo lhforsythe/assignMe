@@ -12,15 +12,27 @@
         <div id="content">
             <h1>Let's get your assignments added:</h1>
             <h3 style="padding-top:20px;">Paste your LMS session ID here:</h3>
-            <form action="" method="POST">
+            <form action="" method="POST" onsubmit="return load()">
                 {% csrf_token %}
-                <input type="radio" id="canvas" name="LMS" value="canvas"><label for="canvas">Canvas</label><br>
-                <input type="radio" id="blackboard" name="LMS" value="blackboard"><label for="blackboard">Blackboard</label><br>
-                <input type="text" id="sessionID" placeholder="i.e. 8hf82hf28hf2..." name="session_id">
-                <br>
-                <input id="button" type="submit" value="Submit">
+                <div id="form">
+                    <input type="radio" id="canvas" name="LMS" value="canvas"><label for="canvas">Canvas</label><br>
+                    <input type="radio" id="blackboard" name="LMS" value="blackboard"><label for="blackboard">Blackboard</label><br>
+                    <input type="text" id="sessionID" placeholder="i.e. 8hf82hf28hf2..." name="session_id">
+                    <br>
+                    <input id="button" type="submit" value="Submit">
+                </div>
             </form>
         </div>
     </div>
+    <div class="loader" style="display:none;"></div>
+    <script>
+        let content = document.getElementById("container");
+        let loader = document.getElementById("loader");
+        function load() {
+            content.style.display = "none";
+            loader.style.display = "block";
+            return true;
+        }
+    </script>
 </body>
 </html>
