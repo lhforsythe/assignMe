@@ -27,9 +27,12 @@ from main.views import toggleView
 from main.views import addAssignment
 from main.views import changeHeader
 from main.views import calendar
-from main.views import generateJson
+from main.views import api
+from main.views import updateSettings
+from main.views import calendarData
 urlpatterns = [
     path("", view, name="index_view"),  # index
+    path('auth/', include('dj_rest_auth.urls')),
     path("accounts/", include("allauth.urls")),
     path("accounts/setup/", landing, name="landing_view"),
     path("accounts/dashboard/", main, name="main_view"),
@@ -40,6 +43,8 @@ urlpatterns = [
     path("accounts/dashboard/addAssignment", addAssignment, name="add_assignment"),
     path("accounts/dashboard/changeHeader", changeHeader, name="change_header"),
     path("accounts/calendar/", calendar, name="calendar"),
-    path("accounts/data/", generateJson, name="generate_json")
+    path("accounts/api/", api, name="api"),
+    path("accounts/dashboard/updateSettings", updateSettings, name="update_settings"),
+    path("accounts/calendar/data", calendarData, name="calendar_data"),
 ]
 

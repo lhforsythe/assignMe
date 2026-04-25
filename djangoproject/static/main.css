@@ -1,9 +1,69 @@
 @import url('https://fonts.googleapis.com/css2?family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&display=swap');
 
+/* themes/color palets */
+body.catpuccin {
+    --color-green: #a6e3a1;
+    --color-primary: #11111b;
+    --color-assignments: #11111b;
+    --color-secondary: #1e1e2e;
+    --color-text: #c6d0f5;
+    --color-selected: #626880;
+    --color-text-background: #737994;
+    background-color: var(--color-secondary);
+}
+body.nord {
+    --color-green: #5cb954;
+    --color-primary: #2e3440;
+    --color-assignments: #2e3440;
+    --color-secondary: #3b4252;
+    --color-text: #4c566a;
+    --color-selected: #434c5e;
+    --color-text-background: #3b4252;
+    background-color: var(--color-secondary);
+}
+body.default {
+    --color-green: green;
+    --color-primary: #1c1717;
+    --color-assignments: #1c1717;
+    --color-secondary: #262624;
+    --color-text: white;
+    --color-selected: #5d5d54;
+    --color-text-background: white;
+    background-color: var(--color-secondary);
+}
+body {
+    --color-green: green;
+    --color-primary: #1c1717;
+    --color-assignments: #1c1717;
+    --color-secondary: #262624;
+    --color-text: white;
+    --color-selected: #5d5d54;
+    --color-text-background: white;
+    background-color:var(--color-secondary);
+}
+body.rosepine {
+    --color-green: #31748f;
+    --color-primary: #191724;
+    --color-assignments: #191724;
+    --color-secondary: #1f1d2e;
+    --color-text: #e0def4;
+    --color-selected: #403d52;
+    --color-text-background: #524f67;
+    background-color:var(--color-secondary);
+}
+body.yousai{ /* this color palet was derived from Aditya Shakya (@adi1090x), I didn't come up with this */
+    --color-green: #a3da67;
+    --color-primary: #EBDCD2FF;
+    --color-assignments: #D97742FF;
+    --color-secondary: #D97742FF;
+    --color-text: #F5E7DEFF;
+    --color-selected: #d9997f;
+    --color-text-background: #D97742FF;
+    background-color: #F5E7DEFF;
+}
 body {
     font-family: "Neuton", sans-serif;
     font-weight: 600;
-    background-color: #262624;
 }
 .assi-icon {
     text-decoration: none;
@@ -22,9 +82,9 @@ body {
 .container div.nav {
     width:400px;
     margin:-15px;
-    border-radius:30px;
-    background-color: #1c1717;
-    min-height: 1000px;
+    border-radius:0px 30px 0px 0px;
+    background-color: var(--color-primary);
+    min-height: 110vh;
     z-index: 1;
 }
 .assignmentContainer {
@@ -45,7 +105,7 @@ body {
     width:200px;
     min-height:70px;
     max-height:70px;
-    background-color: #1c1717;
+    background-color: var(--color-assignments);
     padding: 50px;
     border-radius:20px;
     margin:15px;
@@ -109,28 +169,28 @@ body {
 .add-stuff {
     border: 2px solid rgb(56, 56, 55);
     color: white;
-    position: absolute;
+    position: fixed;
     transform: translate(44px,40px);
     border-radius: 60px;
     height: 55px;
     padding: 10px;
-    background-color: #262624;
+    background-color: var(--color-secondary);
 }
 .search-stuff {
-    position:absolute;
-    transform: translate(13px,96px);
+    position:fixed;
+    transform: translate(32px,97px);
     width: 311px;
-    background-color: #262624;
+    background-color: var(--color-secondary);
     border: 2px solid rgb(56, 56, 55);
     color: white;
     border-radius: 10px;
     padding: 10px;
-    z-index: -1;
+    z-index: 999;
 }
 #search-results {
-    position: absolute;
-  transform: translate(33px,109px);
-  background-color: #262624;
+    position: fixed;
+  transform: translate(31.5px,128px);
+  background-color: var(--color-secondary);
   border-left: 2px solid rgb(56, 56, 55);
   color: white;
   border-radius: 0px 0px 10px 10px;
@@ -138,8 +198,8 @@ body {
   padding-right: 13px;
   border-right: 2px solid rgb(56, 56, 55);
   border-bottom: 2px solid rgb(56, 56, 55);
-  width: 307px;
-  z-index: -2;
+  width: 308px;
+  z-index: 998;
     max-height: 500px;
   overflow: scroll;
 }
@@ -160,7 +220,7 @@ body {
     transform: translate(13px,-41px);
 }
 .notdue {
-    background-color:green;
+    background-color:var(--color-green);
 }
 .duenow {
     background-color:red;
@@ -182,7 +242,7 @@ body {
     padding: 9px;
     border-radius: 9px;
     font-weight: 600;
-    position: absolute;
+    position: absolutgreene;
     transform: translate(450px, -45px);
     font-size: 21px;
     font-family: Verdana, sans-serif;
@@ -198,6 +258,10 @@ body {
 }
 
 .addAssignmentContainer.show {
+    display: block !important;
+    animation: popup 0.5s forwards;
+}
+.settingsContainer.show {
     display: block !important;
     animation: popup 0.5s forwards;
 }
@@ -240,8 +304,31 @@ body {
     100% {opacity: 100%;}
 }
 #calendar {
-    transform: translate(33px,20px);
+transform: translate(573px,-811px);
   color: white;
-    width:1100px;
-    height:740px;
+  width: 1100px;
+  height: 740px;
+  position: absolute;
+}
+.dashboard-btn {
+    transform: translate(33px,313px);
+  width: 335px;
+  border: 2px solid rgb(56, 56, 55);
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  z-index: -1;
+  height: 52px;
+  position: fixed;
+}
+.calendar-btn {
+    transform: translate(33px,377px);
+  width: 335px;
+  border: 2px solid rgb(56, 56, 55);
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  z-index: -1;
+  height: 52px;
+  position: fixed;
 }

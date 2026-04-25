@@ -6,29 +6,77 @@ from .models import Classes
 from .models import Assignments
 from .models import Settings
 from .models import Modules
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date
+from rest_framework.authtoken.models import Token
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 import requests
 
 modifyUser = True
 
 def main(request):
-    return render(request, "main.html", {'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=10), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
+    return render(request, "main.html", {'cur_theme': Settings.objects.get(user=request.user).theme, 'user_token': Token.objects.get_or_create(user=request.user)[0], 'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=10), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
 
-def generateJson(request):
+def updateSettings(request):
+    settings = Settings.objects.get(user=request.user)
+    if request.method == "POST":
+        themeSel = request.POST.get("themes")
+        match themeSel:
+            case "catpuccin":
+                settings.theme = "catpuccin"
+                settings.save()
+                return HttpResponseRedirect("/accounts/dashboard/")
+            case "nord":
+                settings.theme = "nord"
+                settings.save()
+                return HttpResponseRedirect("/accounts/dashboard/")
+            case "yousai":
+                settings.theme = "yousai"
+                settings.save()
+                return HttpResponseRedirect("/accounts/dashboard/")
+            case "rosepine":
+                settings.theme = "rosepine"
+                settings.save()
+                return HttpResponseRedirect("/accounts/dashboard/")
+            case "default":
+                settings.theme = "default"
+                settings.save()
+                return HttpResponseRedirect("/accounts/dashboard/")
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def api(request):
     assignList = []
-    for course in Classes.objects.filter(user=request.user):
-        for assignment in Assignments.objects.filter(course_id=course.key):
-            if assignment.completed:
-                assiColor = "green"
-            else:
-                assiColor = "grey"
-            assignList.append({
-                'title': assignment.name,
-                'start': assignment.due,
-                'end': assignment.due,
-                'color': assiColor,
-                'url': assignment.url,
-            })
+    if request.method == "GET":
+        for course in Classes.objects.filter(user=request.user):
+            for assignment in Assignments.objects.filter(course_id=course.key):
+                assignList.append({
+                    'title': assignment.name,
+                    'days_until_due': (assignment.due - date.today()).days
+                })
+    else:
+        assignList.append({'error': "data must be retrieved via GET request"})
+    return JsonResponse(assignList, safe=False)
+def calendarData(request):
+    assignList = []
+    if request.method == "GET":
+        for course in Classes.objects.filter(user=request.user):
+            for assignment in Assignments.objects.filter(course_id=course.key):
+                if assignment.completed:
+                    assiColor = "green"
+                else:
+                    assiColor = "grey"
+                assignList.append({
+                    'title': assignment.name,
+                    'start': assignment.due,
+                    'end': assignment.due,
+                    'color': assiColor,
+                    'url': assignment.url,
+                    'days_until_due': (assignment.due - date.today()).days
+                })
+    else:
+        assignList.append({'error': "data must be retrieved via GET request"})
     return JsonResponse(assignList, safe=False)
 
 def completed(request):
@@ -231,7 +279,7 @@ def landing(request):
         return render(request, "landing.html") # else, it should load the setup page
     return HttpResponseRedirect("/accounts/dashboard/") # otherwise, if there is one or more classes attributed to user, then redirect to dashboard
 def calendar(request):
-    return render(request, "calendar.html", {'userID': request.user.id, 'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=10), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
+    return render(request, "calendar.html", {'cur_theme': Settings.objects.get(user=request.user).theme, 'user_token': Token.objects.get_or_create(user=request.user)[0], 'userID': request.user.id, 'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=10), 'today': datetime.now().date(), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
 
 def addAssignment(request):
     if request.method == 'POST':

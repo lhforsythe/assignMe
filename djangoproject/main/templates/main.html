@@ -14,11 +14,37 @@
 
 </head>
 <body>
-
+<!--update the theme-->
+<script>
+    let theme = "{{ cur_theme }}";
+         switch (theme) {
+             case "catpuccin":
+                 document.body.classList = "";
+                 document.body.classList.add("catpuccin");
+                 break;
+             case "nord":
+                 document.body.classList = "";
+                 document.body.classList.add("nord");
+                 break;
+             case "yousai":
+                 document.body.classList = "";
+                 document.body.classList.add("yousai");
+                 break;
+             case "rosepine":
+                 document.body.classList = "";
+                 document.body.classList.add("rosepine");
+                 break;
+             case "default":
+                 document.body.classList = "";
+                 document.body.classList.add("default");
+                 break;
+         }
+</script>
+<!--other stuff-->
 <div class="entryView" id="entry" style="display:none; width: 100%;height: 100%;position: fixed;z-index: 998;background-color: rgba(0,0,0,0.8);margin-left: -8px;margin-top: -8px;/*! align-content: center; */">
     <div class="addAssignment" style="position: fixed;
   width: 800px;
-  background-color: #262624;
+  background-color: var(--color-primary);
   z-index: 999;
   height: 500px;
   text-align: center;
@@ -38,8 +64,36 @@
     </div>
 </div>
 
+
+<div class="settingsContainer" id="settingsWin" style="display:none; width: 100%;height: 100%;position: fixed;z-index: 998;background-color: rgba(0,0,0,0.8);margin-left: -8px;margin-top: -8px;/*! align-content: center; */">
+<div class="addAssignment" style="/*! position: ; */width: 600px;background-color: var(--color-primary);z-index: 999;height: 300px;/*! text-align: center; */align-content: center;transform: translate(56vh, 32vh);border-radius: 49px;overflow: scroll;">
+  <p style="color: white;font-size: 22px;margin-left: 50px;margin-top: 46px;">Settings:</p>
+<button onclick="toggleSettings()" style="position:fixed; color:white;background: none;border: none;transform: translate(508px,-64px);"><i class="fa-solid fa-circle-xmark" style="font-size:35px;"></i></button>
+<form action="/accounts/dashboard/updateSettings" method="POST">
+  <label for="themes" style="margin-left: 50px;color: white;font-size: 18px;margin-right: 14px;/*! margin-top: 47px; */">Theme: </label>
+  <select name="themes" id="themes" style="background-color: #e9e9e9;border-radius: 7px;border: none;font-family: &quot;Neuton&quot;, sans-serif;font-size: 14px;padding: 5px;margin-left: 7px;">
+
+      <option value="catpuccin">catpuccin</option>
+
+      <option value="nord">nord</option>
+
+      <option value="rosepine">rose pine</option>
+
+      <option value="yousai">yousai</option>
+
+      <option value="default">default</option>
+
+  </select>
+    <br style=" vmargin-bottom:20px;"><label for="API" style="margin-left: 50px;color: white;font-size: 18px;margin-right: 14px;padding-bottom: 53px;position: fixed;transform: translate(0px, 37px);">API Key: </label>
+    <textarea onclick="this.focus();this.select()" readonly="readonly" name="API" cols="" rows="1" style="margin-top: 26px; background-color: rgb(233, 233, 233); border-radius: 7px; border: medium; font-family: &quot;Neuton&quot;, sans-serif; font-size: 14px; padding: 5px; position: fixed; transform: translate(130px, 9px); width: 255px; height: 21px;resize: none;color: #1e1e1e;">{{ user_token }}</textarea>
+  <input type="submit" value="Save" style="margin-left: 50px;background-color: white;border: none;border-radius: 15px;padding: 10px 25px 11px 25px;font-family: &quot;Neuton&quot;, sans-serif;font-weight: 600;margin-top: 106px;font-size: 16px;/*! color: #848484; */">
+
+    </form>
+</div>
+</div>
+
 <div class="addAssignmentContainer" id="addAssign" style="display:none; width: 100%;height: 100%;position: fixed;z-index: 998;background-color: rgba(0,0,0,0.8);margin-left: -8px;margin-top: -8px;/*! align-content: center; */">
-    <div class="addAssignment" style="position: fixed;width: 600px;background-color: #262624;z-index: 999;height: 300px;/*! text-align: center; *//*! align-content: center; */transform: translate(56vh, 31vh);border-radius: 49px;">
+    <div class="addAssignment" style="position: fixed;width: 600px;background-color: var(--color-primary);z-index: 999;height: 300px;/*! text-align: center; *//*! align-content: center; */transform: translate(56vh, 31vh);border-radius: 49px;">
   <p style="color: white;font-size: 22px;margin-left: 50px;margin-top: 46px;">Add an Assignment:</p>
 <button onclick="toggleAdd()" style="position:fixed; color:white;background: none;border: none;transform: translate(508px,-64px);"><i class="fa-solid fa-circle-xmark" style="font-size:35px;"></i></button>
 <form action="/accounts/dashboard/addAssignment" method="POST">
@@ -79,11 +133,11 @@
         <button class="add-stuff" onclick="toggleAdd()">
             <i class="fa-solid fa-plus" style="font-size: 25px;"></i>
         </button>
-        <hr style="position: absolute;margin-top: 246px;width: 398px;opacity: 0.4;">
-        <button class="" style=" transform: translate(33px,313px);width: 335px;background-color: #5d5d54;border: 2px solid rgb(56, 56, 55);color: white;border-radius: 10px;padding: 10px;z-index: -1;height: 52px;position: absolute;" onclick="window.location.href='/accounts/dashboard/'">
+        <hr style="position: fixed;margin-top: 246px;width: 398px;opacity: 0.4;">
+        <button class="dashboard-btn" style="background-color: var(--color-selected);" onclick="window.location.href='/accounts/dashboard/'">
             <p style="font-family: 'Neuton', sans-serif; color: rgb(223, 223, 223);font-weight: 700;font-size: 16px;position: absolute;margin-top: -10px;margin-left: 10px;">Dashboard</p>
         </button>
-        <button class="" style=" transform: translate(33px,377px);width: 335px;background-color: #262624;border: 2px solid rgb(56, 56, 55);color: white;border-radius: 10px;padding: 10px;z-index: -1;height: 52px;position: absolute;" onclick="window.location.href='/accounts/calendar/'">
+        <button class="calendar-btn" style="background-color: var(--color-secondary);" onclick="window.location.href='/accounts/calendar/'">
             <p style="font-family: 'Neuton', sans-serif; color: rgb(223, 223, 223);font-weight: 700;font-size: 16px;position: absolute;margin-top: -10px;margin-left: 10px;">Calendar</p>
         </button>
             <button style="background:none; border:none;"
@@ -91,8 +145,7 @@
                     hx-post="/accounts/dashboard/toggleView"
                     hx-swap="none"
                     hx-vals='js:{"isRow" : isRow}'> <!--get isRow variable from JS and POST it-->
-                <i
-                        class="fa-solid fa-table-list" style="transform: translate(225px,62px); color: white; opacity: 0.9; width:40px;font-size: 15px;"></i>
+                <i class="fa-solid fa-table-list" style="transform: translate(225px,48px);color: white;opacity: 0.9;width: 40px;font-size: 15px;position: fixed;"></i>
             </button>
         <form>
             {% csrf_token %}
@@ -100,12 +153,15 @@
                     hx-post="/accounts/dashboard/filter"
                     hx-target="#courseAssign"
                     hx-swap="innerHTML">
-                <i class="fa-solid fa-filter" style="transform: translate(275px,41px); color: white; opacity: 0.9; width:20px;"></i>
+                <i class="fa-solid fa-filter" style="transform: translate(275px,28px); color: white; opacity: 0.9; width:20px;position: fixed;"></i>
             </button>
         </form>
-        <a target="_blank" href="/accounts/refresh"><i class="fa-solid fa-arrows-rotate" style="transform: translate(325px,24px); color: white; opacity: 0.9;"></i></a>
+        <a target="_blank" href="/accounts/refresh"><i class="fa-solid fa-arrows-rotate" style="transform: translate(325px,24px); color: white; opacity: 0.9;position: fixed;"></i></a>
         <input type="text" placeholder="search here..." class="search-stuff" id="search">
         <div id="search-results"></div>
+    <button onclick="toggleSettings()" class="" style="border: 2px solid rgb(56, 56, 55);color: white;position: fixed;transform: translate(325px,879px);border-radius: 60px;height: 46px;padding: 10px;background-color: var(--color-secondary);">
+            <i class="fa-solid fa-gear" style="font-size: 17px;"></i>
+        </button>
     </div>
     <div class="courseAssign" id="courseAssign">
         {% load static %}
@@ -142,11 +198,11 @@
                                     {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
                                         <p class="isDue" style="background-color:#6a6a00 !important;">{{ assignment.due|isDue }} Days</p>
                                     {% elif assignment.due|isDue < -1000%}
-                                        <p class="isDue" style="background-color:green !important;">No Due Date :)</p>
+                                        <p class="isDue" style="background-color:var(--color-green) !important;">No Due Date :)</p>
                                     {% elif assignment.due|isDue < 1 and assignment.due|isDue != -7360 %}
                                         <p class="isDue" style="background-color:cadetblue !important;">PAST DUE!</p>
                                     {% else %}
-                                        <p class="isDue" style="background-color:green !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
+                                        <p class="isDue" style="background-color:var(--color-green) !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
                                     {% endif %}
                                 <p>{{ assignment.name }}</p>
                                 <div id="checkmark_container" class="checkmark_container"
@@ -182,11 +238,11 @@
                                     {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
                                         <p class="isDue" style="background-color:#6a6a00 !important;">{{ assignment.due|isDue }} Days</p>
                                     {% elif assignment.due|isDue < -1000 %}
-                                        <p class="isDue" style="background-color:green !important;">No Due Date :)</p>
+                                        <p class="isDue" style="background-color:var(--color-green) !important;">No Due Date :)</p>
                                     {% elif assignment.due|isDue < 1 and assignment.due|isDue != -7360 %}
                                         <p class="isDue" style="background-color:cadetblue !important;">PAST DUE!</p>
                                     {% else %}
-                                        <p class="isDue" style="background-color:green !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
+                                        <p class="isDue" style="background-color:var(--color-green) !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
                                     {% endif %} <!--pipes assignment due date to isDue function template tag-->
                                 <p>{{ assignment.name }}</p>
                                 <div id="checkmark_container" class="checkmark_container"
@@ -207,6 +263,33 @@
     </div>
 </div>
 <script>
+    //theme logic
+    document.getElementById("themes").onchange = changeTheme;
+    function changeTheme() {
+        let theme = this.value;
+         switch (theme) {
+             case "catpuccin":
+                 document.body.classList = "";
+                 document.body.classList.add("catpuccin");
+                 break;
+             case "nord":
+                 document.body.classList = "";
+                 document.body.classList.add("nord");
+                 break;
+             case "yousai":
+                 document.body.classList = "";
+                 document.body.classList.add("yousai");
+                 break;
+             case "rosepine":
+                 document.body.classList = "";
+                 document.body.classList.add("rosepine");
+                 break;
+             case "default":
+                 document.body.classList = "";
+                 document.body.classList.add("default");
+                 break;
+         }
+    }
     //search logic (stores assignment names from database into local js array, have no idea if this is efficient)
     const assignments = [];
     const moduleItems = {};
@@ -306,6 +389,10 @@
     }
     function toggleAdd() {
         const win = document.getElementById("addAssign");
+        win.classList.toggle("show");
+    }
+    function toggleSettings() {
+        const win = document.getElementById("settingsWin");
         win.classList.toggle("show");
     }
     // course hide logic

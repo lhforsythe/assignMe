@@ -43,6 +43,10 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.discord',
+    #REST auth
+    'rest_framework',
+    'rest_framework.authtoken',
+    'dj_rest_auth',
     # custom apps (different pages within webapp)
     "index",
     "main",

@@ -27,7 +27,8 @@ class Assignments(models.Model):
 class Settings(models.Model):
     key = models.AutoField(primary_key=True, db_column='id')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    headerImage = models.CharField(max_length=700, blank=True, null=True)
+    headerImage = models.CharField(max_length=700, blank=True, null=True, default="default")
+    theme = models.CharField(max_length=100, blank=False, null=False)
     class Meta:
         managed = True
         db_table = 'settings'
