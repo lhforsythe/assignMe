@@ -179,7 +179,7 @@
                         {% if assignment.course_id.key == course.key %}
                             <form>
                             {% csrf_token %}
-                            <button style="background:none; border:none;"
+                            <div style="background:none; border:none;"
                                 hx-post="/accounts/dashboard/completed/"
                                 hx-target="#assignment-{{ assignment.key }}"
                                 hx-swap="innerHTML"
@@ -222,7 +222,7 @@
                                     <p id="checkmark_icon" class="checkmark_icon">✅</p>
                                 </div>
                                 </div>
-                            </button>
+                            </div>
                             </form>
                         {% endif %}
                     {% endif %}
@@ -230,7 +230,7 @@
                         {% if assignment.course_id.key == course.key and assignment.due < week and assignment.due > today %}
                             <form>
                             {% csrf_token %}
-                            <button style="background:none; border:none;"
+                            <div style="background:none; border:none;"
                                 hx-post="/accounts/dashboard/completed/"
                                 hx-target="#assignment-{{ assignment.key }}"
                                 hx-swap="innerHTML"
@@ -273,7 +273,7 @@
                                     <p id="checkmark_icon" class="checkmark_container">✅</p>
                                 </div>
                                 </div>
-                            </button>
+                            </div>
                             </form>
 
                         {% endif %}
@@ -349,10 +349,6 @@
            sResults.innerHTML = "<p>nothing matches :)</p>";
            return;
        }
-    const entryPName = document.getElementById('entryName');
-    const entryPDue = document.getElementById('entryDue');
-    const entryAIcon = document.getElementById('entryIconA');
-    const modules = document.getElementById('modules');
 
        qResults.forEach(assignment => {
            const container = document.createElement("div");
@@ -370,7 +366,12 @@
     const resultEntry = document.getElementsByClassName('result-entry');
     //toggle for assignment fly-out
     function toggleEntry(id) {
+        const entryPName = document.getElementById('entryName');
+        const entryPDue = document.getElementById('entryDue');
+        const entryAIcon = document.getElementById('entryIconA');
+        const modules = document.getElementById('modules');
         const assignment = assignments.find(item => item.key === id);
+
         entryPName.innerText = assignment.name;
             if (assignment.due === 0) {
                 entryPDue.innerText = "DUE!";
@@ -422,7 +423,8 @@
     // assignment more menu logic
     function toggleMore() {
         const menu = document.querySelectorAll(".more-menu");
-        menu.classList.toggle("show");    }
+        menu.classList.toggle("show");
+    }
     // course hide logic
     let showAssignments = true;
 
