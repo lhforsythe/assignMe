@@ -193,6 +193,17 @@
                                             {% else %}📝
                                             {% endif %}
                                     </p></a>
+                                    <div class="more-menu">
+                                        <button class="more-option" onclick="toggleEntry({{ assignment.key }})" style="background: none;border: none;color: white;font-size: 18px;margin-bottom: 11px;transform: translate(-45px, 12px);">
+                                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                            <p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -36px);">More</p>
+                                        </button>
+                                        <br>
+                                        <button class="more-option" style="background: none;border: none;color: white;font-size: 20px;transform: translate(-45px, 12px);">
+                                            <i class="fa-solid fa-circle-xmark"></i><p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -40px);">Delete</p>
+                                        </button>
+                                    </div>
+                                    <button class="assi-more" onclick="toggleMore()"><i class="fa-solid fa-ellipsis"></i></button>
                                     {% if assignment.due|isDue == 0%}
                                         <p class="isDue" style="background-color:red !important;">DUE!</p>
                                     {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
@@ -233,6 +244,17 @@
                                             {% else %}📝
                                             {% endif %}
                                         </p></a>
+                                    <div class="more-menu">
+                                        <button class="more-option" onclick="toggleEntry({{ assignment.key }})" style="background: none;border: none;color: white;font-size: 18px;margin-bottom: 11px;transform: translate(-45px, 12px);">
+                                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                            <p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -36px);">More</p>
+                                        </button>
+                                        <br>
+                                        <button class="more-option" style="background: none;border: none;color: white;font-size: 20px;transform: translate(-45px, 12px);">
+                                            <i class="fa-solid fa-circle-xmark"></i><p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -40px);">Delete</p>
+                                        </button>
+                                    </div>
+                                    <button class="assi-more" onclick="toggleMore()"><i class="fa-solid fa-ellipsis"></i></button>
                                     {% if assignment.due|isDue == 0%}
                                         <p class="isDue" style="background-color:red !important;">DUE!</p>
                                     {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
@@ -244,7 +266,7 @@
                                     {% else %}
                                         <p class="isDue" style="background-color:var(--color-green) !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
                                     {% endif %} <!--pipes assignment due date to isDue function template tag-->
-                                <p>{{ assignment.name }}</p>
+                                <p class="assi-name">{{ assignment.name }}</p>
                                 <div id="checkmark_container" class="checkmark_container"
                                      style="display: {% if assignment.completed %} block
                                             {% else %} none {% endif %} ;">
@@ -339,7 +361,17 @@
            container.textContent = assignment.name;
            // add an event listener on each result, so if clicked, it can open up the fly-out
            container.addEventListener('click', function () {
-            entryPName.innerText = assignment.name;
+            toggleEntry(assignment.key)
+           })
+           sResults.appendChild(container);
+       })
+    });
+    // each entry logic for showing popup
+    const resultEntry = document.getElementsByClassName('result-entry');
+    //toggle for assignment fly-out
+    function toggleEntry(id) {
+        const assignment = assignments.find(item => item.key === id);
+        entryPName.innerText = assignment.name;
             if (assignment.due === 0) {
                 entryPDue.innerText = "DUE!";
                 entryPDue.classList.add("duenow");
@@ -369,15 +401,7 @@
                        modules.appendChild(linkItem);
                    }
                }
-            toggleEntry()
-           })
-           sResults.appendChild(container);
-       })
-    });
-    // each entry logic for showing popup
-    const resultEntry = document.getElementsByClassName('result-entry');
-    //toggle for assignment fly-out
-    function toggleEntry() {
+
         const win = document.getElementById("entry");
         win.classList.toggle("show");
     }
@@ -395,6 +419,10 @@
         const win = document.getElementById("settingsWin");
         win.classList.toggle("show");
     }
+    // assignment more menu logic
+    function toggleMore() {
+        const menu = document.querySelectorAll(".more-menu");
+        menu.classList.toggle("show");    }
     // course hide logic
     let showAssignments = true;
 

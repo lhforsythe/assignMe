@@ -333,3 +333,27 @@ transform: translate(573px,-811px);
   height: 52px;
   position: fixed;
 }
+.assi-text {
+    transform: translateY(10px);
+}
+.assi-more {
+    background: none;
+  border: none;
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  transform: translate(185px,-26px);
+}
+.more-menu {
+    display:none;
+    background-color: var(--color-secondary);
+    box-shadow: 0px 0px 50px black;
+    width: 150px;
+    border-radius: 20px;
+    min-height: 84px;
+    transform: translate(189px, -68px);
+}
+.more-menu.show {
+    display:block;
+    animation: popup 0.3s forwards;
+}
