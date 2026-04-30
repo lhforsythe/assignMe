@@ -243,9 +243,10 @@ body {
     border-radius: 9px;
     font-weight: 600;
     position: absolutgreene;
-    transform: translate(450px, -45px);
+    transform: translate(472px, -11px);
     font-size: 21px;
     font-family: Verdana, sans-serif;
+    width: 100px;
 }
 
 .isDue.row {
