@@ -15,11 +15,7 @@
                         {% if assignment.course_id.key == course.key %}
                             <form>
                             {% csrf_token %}
-                            <button style="background:none; border:none;"
-                                hx-post="/accounts/dashboard/completed/"
-                                hx-target="#assignment-{{ assignment.key }}"
-                                hx-swap="innerHTML"
-                                hx-vals='{"assignment_id": "{{ assignment.key }}"}'>
+                            <div style="background:none; border:none;">
 
                                 <div id="assignment-{{ assignment.key }}" class="eachAssignment">
                                         <a href="{{ assignment.url }}"><p class="assi-icon">
@@ -29,13 +25,45 @@
                                             {% else %}📝
                                             {% endif %}
                                         </p></a>
-                                <div id="checkmark_container" class="checkmark_container"
+                                    <div class="more-menu" id="more-menu-{{ assignment.key }}">
+                                        <div class="more-option" onclick="toggleEntry({{ assignment.key }})">
+                                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                            <p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -36px);">More</p>
+                                        </div>
+                                        <br>
+                                        <div class="more-option" >
+                                            <i class="fa-solid fa-circle-xmark"></i><p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -40px);">Delete</p>
+                                        </div>
+                                    </div>
+                                    <div class="assi-more" onclick="toggleMore({{ assignment.key }})"><i class="fa-solid fa-ellipsis"></i></div>
+                                    {% if assignment.due|isDue == 0%}
+                                        <p class="isDue" style="background-color:red !important;">DUE!</p>
+                                    {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
+                                        <p class="isDue" style="background-color:#6a6a00 !important;">{{ assignment.due|isDue }} Days</p>
+                                    {% elif assignment.due|isDue < -1000 %}
+                                        <p class="isDue" style="background-color:var(--color-green) !important;">No Due Date :)</p>
+                                    {% elif assignment.due|isDue < 1 and assignment.due|isDue != -7360 %}
+                                        <p class="isDue" style="background-color:cadetblue !important;">PAST DUE!</p>
+                                    {% else %}
+                                        <p class="isDue" style="background-color:var(--color-green) !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
+                                    {% endif %} <!--pipes assignment due date to isDue function template tag-->
+                                <p class="assi-name"
+                                hx-post="/accounts/dashboard/completed/"
+                                hx-target="#assignment-{{ assignment.key }}"
+                                hx-swap="innerHTML"
+                                hx-vals='{"assignment_id": "{{ assignment.key }}"}'>{{ assignment.name }}</p>
+                                <div
+                                    hx-post="/accounts/dashboard/completed/"
+                                    hx-target="#assignment-{{ assignment.key }}"
+                                    hx-swap="innerHTML"
+                                    hx-vals='{"assignment_id": "{{ assignment.key }}"}'
+                                    id="checkmark_container" class="checkmark_container"
                                      style="display: {% if assignment.completed %} block
                                             {% else %} none {% endif %} ;">
-                                    <p id="checkmark_icon" class="checkmark_icon">✅</p>
+                                    <p id="checkmark_icon" class="checkmark_container">✅</p>
                                 </div>
                                 </div>
-                            </button>
+                            </div>
                             </form>
                         {% endif %}
                     {% endif %}
@@ -43,11 +71,7 @@
                         {% if assignment.course_id.key == course.key and assignment.due < week and assignment.due > today %}
                             <form>
                             {% csrf_token %}
-                            <button style="background:none; border:none;"
-                                hx-post="/accounts/dashboard/completed/"
-                                hx-target="#assignment-{{ assignment.key }}"
-                                hx-swap="innerHTML"
-                                hx-vals='{"assignment_id": "{{ assignment.key }}"}'>
+                             <div style="background:none; border:none;">
 
                                 <div id="assignment-{{ assignment.key }}" class="eachAssignment">
                                         <a href="{{ assignment.url }}"><p class="assi-icon">
@@ -57,25 +81,45 @@
                                             {% else %}📝
                                             {% endif %}
                                         </p></a>
-                                {% if assignment.due|isDue == 0%}
-                                    <p class="isDue" style="background-color:red !important;">DUE!</p>
-                                {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
-                                    <p class="isDue" style="background-color:#6a6a00 !important;">{{ assignment.due|isDue }} Days</p>
-                                {% elif assignment.due|isDue < -1000 %}
-                                    <p class="isDue" style="background-color:green !important;">No Due Date :)</p>
-                                {% elif assignment.due|isDue < 1 and assignment.due|isDue != -7360 %}
-                                    <p class="isDue" style="background-color:cadetblue !important;">PAST DUE!</p>
-                                {% else %}
-                                    <p class="isDue" style="background-color:green !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
-                                {% endif %}
-                                <p>{{ assignment.name }}</p>
-                                <div id="checkmark_container" class="checkmark_container"
+                                    <div class="more-menu" id="more-menu-{{ assignment.key }}">
+                                        <div class="more-option" onclick="toggleEntry({{ assignment.key }})">
+                                            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                            <p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -36px);">More</p>
+                                        </div>
+                                        <br>
+                                        <div class="more-option" >
+                                            <i class="fa-solid fa-circle-xmark"></i><p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -40px);">Delete</p>
+                                        </div>
+                                    </div>
+                                    <div class="assi-more" onclick="toggleMore({{ assignment.key }})"><i class="fa-solid fa-ellipsis"></i></div>
+                                    {% if assignment.due|isDue == 0%}
+                                        <p class="isDue" style="background-color:red !important;">DUE!</p>
+                                    {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
+                                        <p class="isDue" style="background-color:#6a6a00 !important;">{{ assignment.due|isDue }} Days</p>
+                                    {% elif assignment.due|isDue < -1000 %}
+                                        <p class="isDue" style="background-color:var(--color-green) !important;">No Due Date :)</p>
+                                    {% elif assignment.due|isDue < 1 and assignment.due|isDue != -7360 %}
+                                        <p class="isDue" style="background-color:cadetblue !important;">PAST DUE!</p>
+                                    {% else %}
+                                        <p class="isDue" style="background-color:var(--color-green) !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
+                                    {% endif %} <!--pipes assignment due date to isDue function template tag-->
+                                <p class="assi-name"
+                                hx-post="/accounts/dashboard/completed/"
+                                hx-target="#assignment-{{ assignment.key }}"
+                                hx-swap="innerHTML"
+                                hx-vals='{"assignment_id": "{{ assignment.key }}"}'>{{ assignment.name }}</p>
+                                <div
+                                    hx-post="/accounts/dashboard/completed/"
+                                    hx-target="#assignment-{{ assignment.key }}"
+                                    hx-swap="innerHTML"
+                                    hx-vals='{"assignment_id": "{{ assignment.key }}"}'
+                                    id="checkmark_container" class="checkmark_container"
                                      style="display: {% if assignment.completed %} block
                                             {% else %} none {% endif %} ;">
-                                    <p id="checkmark_icon" class="checkmark_icon">✅</p>
+                                    <p id="checkmark_icon" class="checkmark_container">✅</p>
                                 </div>
                                 </div>
-                            </button>
+                            </div>
                             </form>
                         {% endif %}
                     {% endif %}

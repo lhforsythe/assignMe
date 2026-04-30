@@ -1,5 +1,16 @@
 {% load isDue %}
 {% load static %}
+<div class="more-menu" id="more-menu-{{ assignment.key }}">
+    <div class="more-option" onclick="toggleEntry({{ assignment.key }})">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        <p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -36px);">More</p>
+    </div>
+    <br>
+    <div class="more-option">
+        <i class="fa-solid fa-circle-xmark"></i><p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -40px);">Delete</p>
+    </div>
+</div>
+<div class="assi-more" onclick="toggleMore({{ assignment.key }})"><i class="fa-solid fa-ellipsis"></i></div>
 {% if isRow == True %}
     <a href="{{ assignment.url }}"><p class="assi-icon row">
         {% if assignment.type == "online_quiz" %}📝
@@ -17,23 +28,33 @@
         {% endif %}
     </p></a>
 {% endif %}
-<p>{{ assignment.name }}</p>
+<p class="assi-name"
+    hx-post="/accounts/dashboard/completed/"
+    hx-target="#assignment-{{ assignment.key }}"
+    hx-swap="innerHTML"
+    hx-vals='{"assignment_id": "{{ assignment.key }}"}'>{{ assignment.name }}
+</p>
 {% if isRow == True %}
     {% if assignment.due|isDue == 0%}
         <p class="isDue row" style="background-color:red !important;">DUE!</p>
     {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
         <p class="isDue row" style="background-color:#6a6a00 !important;">{{ assignment.due|isDue }} Days</p>
     {% elif assignment.due|isDue < -1000 %}
-        <p class="isDue row" style="background-color:green !important;">No Due Date :)</p>
+        <p class="isDue row" style="background-color:var(--color-green) !important;">No Due Date :)</p>
     {% elif assignment.due|isDue < 1 and assignment.due|isDue != -7360 %}
         <p class="isDue row" style="background-color:cadetblue !important;">PAST DUE!</p>
     {% else %}
-        <p class="isDue row" style="background-color:green !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
+        <p class="isDue row" style="background-color:var(--color-green) !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
     {% endif %}
-    <div id="checkmark_container" class="checkmark_container row"
+    <div
+        hx-post="/accounts/dashboard/completed/"
+        hx-target="#assignment-{{ assignment.key }}"
+        hx-swap="innerHTML"
+        hx-vals='{"assignment_id": "{{ assignment.key }}"}'
+        id="checkmark_container" class="checkmark_container"
          style="display: {% if assignment.completed %} block
                 {% else %} none {% endif %} ;">
-        <p id="checkmark_icon" class="checkmark_icon row">✅</p>
+        <p id="checkmark_icon" class="checkmark_container">✅</p>
     </div>
 {% else %}
     {% if assignment.due|isDue == 0%}
@@ -41,15 +62,20 @@
     {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
         <p class="isDue" style="background-color:#6a6a00 !important;">{{ assignment.due|isDue }} Days</p>
     {% elif assignment.due|isDue < -1000 %}
-        <p class="isDue" style="background-color:green !important;">No Due Date :)</p>
+        <p class="isDue" style="background-color:var(--color-green) !important;">No Due Date :)</p>
     {% elif assignment.due|isDue < 1 and assignment.due|isDue != -7360 %}
         <p class="isDue" style="background-color:cadetblue !important;">PAST DUE!</p>
     {% else %}
-        <p class="isDue" style="background-color:green !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
+        <p class="isDue" style="background-color:var(--color-green) !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
     {% endif %}
-    <div id="checkmark_container" class="checkmark_container"
+    <div
+        hx-post="/accounts/dashboard/completed/"
+        hx-target="#assignment-{{ assignment.key }}"
+        hx-swap="innerHTML"
+        hx-vals='{"assignment_id": "{{ assignment.key }}"}'
+        id="checkmark_container" class="checkmark_container"
          style="display: {% if assignment.completed %} block
                 {% else %} none {% endif %} ;">
-        <p id="checkmark_icon" class="checkmark_icon">✅</p>
+        <p id="checkmark_icon" class="checkmark_container">✅</p>
     </div>
 {% endif %}

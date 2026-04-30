@@ -217,7 +217,10 @@ body {
     border-radius: 9px;
     font-weight: bold;
     position: absolute;
-    transform: translate(13px,-41px);
+    transform: translate(13px,-36px);
+      font-family: "Verdana";
+      font-weight: 600;
+      font-size: 12px;
 }
 .notdue {
     background-color:var(--color-green);
@@ -333,8 +336,18 @@ transform: translate(573px,-811px);
   height: 52px;
   position: fixed;
 }
-.assi-text {
+.more-option {
+    background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  margin-bottom: -9px;
+  transform: translate(18px, 12px);
+}
+.assi-name {
     transform: translateY(10px);
+    position: absolute;
+    width: 200px;
 }
 .assi-more {
     background: none;
@@ -351,7 +364,8 @@ transform: translate(573px,-811px);
     width: 150px;
     border-radius: 20px;
     min-height: 84px;
-    transform: translate(189px, -68px);
+    transform: translate(217px, -68px);
+    z-index: 1;
 }
 .more-menu.show {
     display:block;

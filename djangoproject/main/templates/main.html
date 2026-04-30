@@ -58,7 +58,7 @@
     <p style="color: white;font-size: 22px;margin-left: 72px;margin-top: 107px;width: 274px;position: absolute;text-align: left;" id="" class="">Prerequisites:</p>
     <ul id="modules" style="color: white;position: fixed;transform: translate(47px, 134px);">
     </ul>
-    <button onclick="toggleEntry()" style="position:fixed; color:white;background: none;border: none;transform: translate(281px,-21px);"><i class="fa-solid fa-circle-xmark" style="font-size:35px;"></i></button>
+    <button onclick="document.getElementById('entry').classList.toggle('show');" style="position:fixed; color:white;background: none;border: none;transform: translate(281px,-21px);"><i class="fa-solid fa-circle-xmark" style="font-size:35px;"></i></button>
     <p class="isDueEntry" id="entryDue" class="isDueEntry" style="">Sometime</p>
     </div>
     </div>
@@ -179,11 +179,7 @@
                         {% if assignment.course_id.key == course.key %}
                             <form>
                             {% csrf_token %}
-                            <div style="background:none; border:none;"
-                                hx-post="/accounts/dashboard/completed/"
-                                hx-target="#assignment-{{ assignment.key }}"
-                                hx-swap="innerHTML"
-                                hx-vals='{"assignment_id": "{{ assignment.key }}"}'>
+                            <div style="background:none; border:none;">
 
                                 <div id="assignment-{{ assignment.key }}" class="eachAssignment">
                                     <a href="{{ assignment.url }}"><p class="assi-icon">
@@ -193,17 +189,17 @@
                                             {% else %}📝
                                             {% endif %}
                                     </p></a>
-                                    <div class="more-menu">
-                                        <button class="more-option" onclick="toggleEntry({{ assignment.key }})" style="background: none;border: none;color: white;font-size: 18px;margin-bottom: 11px;transform: translate(-45px, 12px);">
+                                    <div class="more-menu" id="more-menu-{{ assignment.key }}">
+                                        <div class="more-option" onclick="toggleEntry({{ assignment.key }})">
                                             <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                             <p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -36px);">More</p>
-                                        </button>
+                                        </div>
                                         <br>
-                                        <button class="more-option" style="background: none;border: none;color: white;font-size: 20px;transform: translate(-45px, 12px);">
+                                        <div class="more-option">
                                             <i class="fa-solid fa-circle-xmark"></i><p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -40px);">Delete</p>
-                                        </button>
+                                        </div>
                                     </div>
-                                    <button class="assi-more" onclick="toggleMore()"><i class="fa-solid fa-ellipsis"></i></button>
+                                    <div class="assi-more" onclick="toggleMore({{ assignment.key }})"><i class="fa-solid fa-ellipsis"></i></div>
                                     {% if assignment.due|isDue == 0%}
                                         <p class="isDue" style="background-color:red !important;">DUE!</p>
                                     {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
@@ -215,8 +211,17 @@
                                     {% else %}
                                         <p class="isDue" style="background-color:var(--color-green) !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
                                     {% endif %}
-                                <p>{{ assignment.name }}</p>
-                                <div id="checkmark_container" class="checkmark_container"
+                                <p class="assi-name"
+                                hx-post="/accounts/dashboard/completed/"
+                                hx-target="#assignment-{{ assignment.key }}"
+                                hx-swap="innerHTML"
+                                hx-vals='{"assignment_id": "{{ assignment.key }}"}'>{{ assignment.name }}</p>
+                                <div
+                                    hx-post="/accounts/dashboard/completed/"
+                                    hx-target="#assignment-{{ assignment.key }}"
+                                    hx-swap="innerHTML"
+                                    hx-vals='{"assignment_id": "{{ assignment.key }}"}'
+                                    id="checkmark_container" class="checkmark_container"
                                      style="display: {% if assignment.completed %} block
                                             {% else %} none {% endif %} ;">
                                     <p id="checkmark_icon" class="checkmark_icon">✅</p>
@@ -230,11 +235,7 @@
                         {% if assignment.course_id.key == course.key and assignment.due < week and assignment.due > today %}
                             <form>
                             {% csrf_token %}
-                            <div style="background:none; border:none;"
-                                hx-post="/accounts/dashboard/completed/"
-                                hx-target="#assignment-{{ assignment.key }}"
-                                hx-swap="innerHTML"
-                                hx-vals='{"assignment_id": "{{ assignment.key }}"}'>
+                            <div style="background:none; border:none;">
 
                                 <div id="assignment-{{ assignment.key }}" class="eachAssignment">
                                         <a href="{{ assignment.url }}"><p class="assi-icon">
@@ -244,17 +245,17 @@
                                             {% else %}📝
                                             {% endif %}
                                         </p></a>
-                                    <div class="more-menu">
-                                        <button class="more-option" onclick="toggleEntry({{ assignment.key }})" style="background: none;border: none;color: white;font-size: 18px;margin-bottom: 11px;transform: translate(-45px, 12px);">
+                                    <div class="more-menu" id="more-menu-{{ assignment.key }}">
+                                        <div class="more-option" onclick="toggleEntry({{ assignment.key }})">
                                             <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                             <p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -36px);">More</p>
-                                        </button>
+                                        </div>
                                         <br>
-                                        <button class="more-option" style="background: none;border: none;color: white;font-size: 20px;transform: translate(-45px, 12px);">
+                                        <div class="more-option" >
                                             <i class="fa-solid fa-circle-xmark"></i><p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -40px);">Delete</p>
-                                        </button>
+                                        </div>
                                     </div>
-                                    <button class="assi-more" onclick="toggleMore()"><i class="fa-solid fa-ellipsis"></i></button>
+                                    <div class="assi-more" onclick="toggleMore({{ assignment.key }})"><i class="fa-solid fa-ellipsis"></i></div>
                                     {% if assignment.due|isDue == 0%}
                                         <p class="isDue" style="background-color:red !important;">DUE!</p>
                                     {% elif assignment.due|isDue < 4 and assignment.due|isDue > 0 %}
@@ -266,8 +267,17 @@
                                     {% else %}
                                         <p class="isDue" style="background-color:var(--color-green) !important;">{{ assignment.due|isDue }} Days</p> <!--pipes assignment due date to isDue function template tag-->
                                     {% endif %} <!--pipes assignment due date to isDue function template tag-->
-                                <p class="assi-name">{{ assignment.name }}</p>
-                                <div id="checkmark_container" class="checkmark_container"
+                                <p class="assi-name"
+                                hx-post="/accounts/dashboard/completed/"
+                                hx-target="#assignment-{{ assignment.key }}"
+                                hx-swap="innerHTML"
+                                hx-vals='{"assignment_id": "{{ assignment.key }}"}'>{{ assignment.name }}</p>
+                                <div
+                                    hx-post="/accounts/dashboard/completed/"
+                                    hx-target="#assignment-{{ assignment.key }}"
+                                    hx-swap="innerHTML"
+                                    hx-vals='{"assignment_id": "{{ assignment.key }}"}'
+                                    id="checkmark_container" class="checkmark_container"
                                      style="display: {% if assignment.completed %} block
                                             {% else %} none {% endif %} ;">
                                     <p id="checkmark_icon" class="checkmark_container">✅</p>
@@ -421,8 +431,8 @@
         win.classList.toggle("show");
     }
     // assignment more menu logic
-    function toggleMore() {
-        const menu = document.querySelectorAll(".more-menu");
+    function toggleMore(id) {
+        const menu = document.getElementById("more-menu-" + id);
         menu.classList.toggle("show");
     }
     // course hide logic
