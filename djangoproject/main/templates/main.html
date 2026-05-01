@@ -195,7 +195,10 @@
                                             <p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -36px);">More</p>
                                         </div>
                                         <br>
-                                        <div class="more-option">
+                                        <div class="more-option"
+                                        hx-post="/accounts/dashboard/removeAssignment"
+                                        hx-target=""
+                                        hx-vals='{"id": "{{ assignment.key }}"}'>
                                             <i class="fa-solid fa-circle-xmark"></i><p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -40px);">Delete</p>
                                         </div>
                                     </div>
@@ -251,7 +254,10 @@
                                             <p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -36px);">More</p>
                                         </div>
                                         <br>
-                                        <div class="more-option" >
+                                        <div class="more-option"
+                                        hx-post="/accounts/dashboard/removeAssignment"
+                                        hx-target="body"
+                                        hx-vals='{"id": "{{ assignment.key }}"}'>
                                             <i class="fa-solid fa-circle-xmark"></i><p style="font-size: 16px;font-family: Neuton, sans-serif;font-weight: 600;position: fixed;transform: translate(34px, -40px);">Delete</p>
                                         </div>
                                     </div>

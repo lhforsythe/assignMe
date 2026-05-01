@@ -290,6 +290,12 @@ def addAssignment(request):
         newAssignment.due = due
         newAssignment.save()
         return HttpResponseRedirect("/accounts/dashboard/")
+def removeAssignment(request):
+    if request.method == 'POST':
+        id = request.POST.get('id')
+        assignment = Assignments.objects.filter(key=id)
+        assignment.delete()
+        return HttpResponseRedirect("/accounts/dashboard/")
 def changeHeader(request):
     if request.method == 'POST':
         url = request.POST.get('url')

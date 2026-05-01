@@ -30,6 +30,7 @@ from main.views import calendar
 from main.views import api
 from main.views import updateSettings
 from main.views import calendarData
+from main.views import removeAssignment
 urlpatterns = [
     path("", view, name="index_view"),  # index
     path('auth/', include('dj_rest_auth.urls')),
@@ -41,6 +42,7 @@ urlpatterns = [
     path("accounts/dashboard/completed/", completed, name="completed_view"),
     path("accounts/dashboard/toggleView", toggleView, name="toggle_view"),
     path("accounts/dashboard/addAssignment", addAssignment, name="add_assignment"),
+    path("accounts/dashboard/removeAssignment", removeAssignment, name="remove_assignment"),
     path("accounts/dashboard/changeHeader", changeHeader, name="change_header"),
     path("accounts/calendar/", calendar, name="calendar"),
     path("accounts/api/", api, name="api"),
