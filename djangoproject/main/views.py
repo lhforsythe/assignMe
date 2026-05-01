@@ -16,7 +16,7 @@ import requests
 modifyUser = True
 
 def main(request):
-    return render(request, "main.html", {'cur_theme': Settings.objects.get(user=request.user).theme, 'user_token': Token.objects.get_or_create(user=request.user)[0], 'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=10), 'today': (datetime.now().date()) - timedelta(days=1), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
+    return render(request, "main.html", {'cur_theme': Settings.objects.get_or_create(user=request.user)[0].theme, 'user_token': Token.objects.get_or_create(user=request.user)[0], 'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=10), 'today': (datetime.now().date()) - timedelta(days=1), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
 
 def updateSettings(request):
     settings = Settings.objects.get(user=request.user)
@@ -269,6 +269,7 @@ def landing(request):
         if request.method == 'POST':
             LMS = request.POST.get('LMS')
             session_id = request.POST.get('session_id', '')
+
             if LMS == 'canvas':
                 retrieve_data_canvas(session_id, request)
             if LMS == 'blackboard':
