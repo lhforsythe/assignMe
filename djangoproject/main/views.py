@@ -125,11 +125,11 @@ def get_module_info(user_session, curAssign, assignmentID, classID):
     moduleData = requests.get("https://canvas.liberty.edu/api/v1/courses/" + str(classID) + "/module_item_sequence?asset_type=Assignment&asset_id=" + str(assignmentID), cookies=sessionCookies).json()
     try: # basically, if it can't find any module item associated with assignment, just skip it rather than halting the whole program. This occured for me for some reason, not sure if this is a real issue in production though.
         moduleID = moduleData["modules"][0]["id"]
+        moduleItems = requests.get(
+            "https://canvas.liberty.edu/api/v1/courses/" + str(classID) + "/modules/" + str(moduleID) + "/items",
+            cookies=sessionCookies).json()
     except IndexError:
-        return 0
-
-    moduleItems = requests.get("https://canvas.liberty.edu/api/v1/courses/" + str(classID) + "/modules/" + str(moduleID) + "/items", cookies=sessionCookies).json()
-    Exception(moduleItems)
+        moduleItems = [{"title": "No module information present.", "html_url": "", "type": "None"}]
     for item in moduleItems:
         itemData = entries.create(assignmentID=curAssign)
         itemData.name = item["title"]
@@ -159,7 +159,7 @@ def get_assignments_canvas(request, user_session):
             curAssign.type = assignment["submission_types"][0]
             curAssign.total_points = assignment["points_possible"]
             curAssign.url = assignment["html_url"]
-            get_module_info(user_session, curAssign, assignment["id"], aclass.course_id)
+            #get_module_info(user_session, curAssign, assignment["id"], aclass.course_id)
             if assignment["due_at"] is None:
                 dueDate = datetime.strptime("2006-01-26", "%Y-%m-%d").date() - timedelta(days=1)
             else:

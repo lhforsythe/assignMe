@@ -94,6 +94,7 @@ DATABASES = {
         "PASSWORD": "Snowbell1!",
         "HOST": "mysql",
         "PORT": "3306",
+        "CONN_MAX_AGE": 0,
     }
 }
 
