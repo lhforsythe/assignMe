@@ -380,11 +380,11 @@ transform: translate(573px,-811px);
         display: none;
     }
     .courseAssign {
-        transform: scale(0.5);
-        margin-left: -152px;
+        transform: scale(0.9);
+        margin-left: 21px;
     }
     .assignments {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
     }
     #changeHeaderForm {
         display:none;
@@ -402,5 +402,6 @@ transform: translate(573px,-811px);
         height: unset !important;
         min-height: 20px !important;
         grid-template-areas: none !important;
+        margin-top:-563px;
     }
 }
