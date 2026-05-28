@@ -374,7 +374,13 @@ transform: translate(573px,-811px);
 
 @media (max-width: 768px) {
     #header-img {
-        display:none;
+      object-fit: cover;
+      max-height: 150px !important;
+      width: 100vw !important;
+      position: absolute;
+      transform: translate(0px,523px) !important;
+      z-index: -999;
+      margin-left: -8px !important;
     }
     #changeHeader {
         display: none;
@@ -382,6 +388,7 @@ transform: translate(573px,-811px);
     .courseAssign {
         transform: scale(0.9);
         margin-left: 21px;
+        margin-top: -241px !important;
     }
     .assignments {
         grid-template-columns: repeat(1, 1fr);
@@ -390,18 +397,51 @@ transform: translate(573px,-811px);
         display:none;
     }
     .nav {
-        min-height: 490px !important;
-        max-height: 490px;
+        min-height: 331px !important;
+        max-height: 331px;
         transform: scale(0.93);
-        margin-left: -29px !important;
+        margin-left: -27px !important;
         border-radius: 30px 30px 0px 0px !important;
         position: sticky;
-        top: 322px;
+        top: 60vh;
+        width: 109vw !important;
+        box-shadow: 0px 5px 22px black;
     }
     .container {
         height: unset !important;
         min-height: 20px !important;
         grid-template-areas: none !important;
         margin-top:-563px;
+    }
+    .dashboard-btn {
+        transform: translate(33px,162px);
+    }
+    .calendar-btn {
+        transform: translate(33px,230px);
+    }
+    #nav-divider {
+        margin-top: 134px !important;
+    }
+    .add-stuff {
+        transform: translate(167px,-17px) !important;
+    }
+    #rowIcon {
+        transform: translate(18px,11px) !important;
+    }
+    #filterIcon {
+        transform: translate(78px,-9px) !important;
+    }
+    #refreshIcon {
+        transform: translate(338px,-13px) !important;
+    }
+    .search-stuff {
+        transform: translate(32px,30px) !important;
+    }
+    #search-results {
+        transform: translate(31.5px,66px) !important;
+    }
+    #header-text {
+        margin-bottom: 18px !important;
+        margin-top: 16px !important;
     }
 }

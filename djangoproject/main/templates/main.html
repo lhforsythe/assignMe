@@ -134,7 +134,7 @@
         <button class="add-stuff" onclick="toggleAdd()">
             <i class="fa-solid fa-plus" style="font-size: 25px;"></i>
         </button>
-        <hr style="position: fixed;margin-top: 246px;width: 398px;opacity: 0.4;">
+        <hr id="nav-divider" style="position: fixed;margin-top: 246px;width: 398px;opacity: 0.4;">
         <button class="dashboard-btn" style="background-color: var(--color-selected);" onclick="window.location.href='/accounts/dashboard/'">
             <p style="font-family: 'Neuton', sans-serif; color: rgb(223, 223, 223);font-weight: 700;font-size: 16px;position: absolute;margin-top: -10px;margin-left: 10px;">Dashboard</p>
         </button>
@@ -146,7 +146,7 @@
                     hx-post="/accounts/dashboard/toggleView"
                     hx-swap="none"
                     hx-vals='js:{"isRow" : isRow}'> <!--get isRow variable from JS and POST it-->
-                <i class="fa-solid fa-table-list" style="transform: translate(225px,48px);color: white;opacity: 0.9;width: 40px;font-size: 15px;position: fixed;"></i>
+                <i id="rowIcon" class="fa-solid fa-table-list" style="transform: translate(225px,48px);color: white;opacity: 0.9;width: 40px;font-size: 15px;position: fixed;"></i>
             </button>
         <form>
             {% csrf_token %}
@@ -154,10 +154,10 @@
                     hx-post="/accounts/dashboard/filter"
                     hx-target="#courseAssign"
                     hx-swap="innerHTML">
-                <i class="fa-solid fa-filter" style="transform: translate(275px,28px); color: white; opacity: 0.9; width:20px;position: fixed;"></i>
+                <i id="filterIcon" class="fa-solid fa-filter" style="transform: translate(275px,28px); color: white; opacity: 0.9; width:20px;position: fixed;"></i>
             </button>
         </form>
-        <a target="_blank" href="/accounts/refresh"><i class="fa-solid fa-arrows-rotate" style="transform: translate(325px,24px); color: white; opacity: 0.9;position: fixed;"></i></a>
+        <a target="_blank" href="/accounts/refresh"><i id="refreshIcon" class="fa-solid fa-arrows-rotate" style="transform: translate(325px,24px); color: white; opacity: 0.9;position: fixed;"></i></a>
         <input type="text" placeholder="search here..." class="search-stuff" id="search">
         <div id="search-results"></div>
     <button onclick="toggleSettings()" class="" style="border: 2px solid rgb(56, 56, 55);color: white;position: fixed;transform: translate(325px,879px);border-radius: 60px;height: 46px;padding: 10px;background-color: var(--color-secondary);">
@@ -166,7 +166,7 @@
     </div>
     <div class="courseAssign" id="courseAssign">
         {% load static %}
-        <h1 style="color:white;margin-top: 31px;margin-bottom: 76px;text-shadow: 0px 0px 20px black;">Classes and Assignments</h1>
+        <h1 id="header-text" style="color:white;margin-top: 31px;margin-bottom: 76px;text-shadow: 0px 0px 20px black;">Classes and Assignments</h1>
         <br>        {% for course in courses %}
             <p style="color:white;">{{ course.name }}
                 <button onclick="courseList('assignments{{ course.key }}')" style="background:none; border:none; color:white;">
