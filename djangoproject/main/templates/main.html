@@ -129,6 +129,9 @@
     <form id="changeHeaderForm" action="/accounts/dashboard/changeHeader" method="POST">
         <input type="text" name="url" id="headerInput" style="position: absolute;transform: translate(797px,126px);width: 178px;background-color: #262624;border: 2px solid rgb(56, 56, 55);color: white;border-radius: 10px;padding: 10px;max-height: 3px; display:none;">
     </form>
+    <button class="" style="background-color: var(--color-primary);transform: translate(-1vw, 48.8vh);height: 60px;width: 50px;border-radius: 20px;border: none;position: fixed;z-index: 3;" onclick="toggleNav()">
+            <i class="fa-solid fa-angle-right" style="color: white;font-size: 18px;margin-left: 15px;"></i>
+        </button>
     <div class="nav">
         {% csrf_token %}
         <button class="add-stuff" onclick="toggleAdd()">
@@ -140,6 +143,9 @@
         </button>
         <button class="calendar-btn" style="background-color: var(--color-secondary);" onclick="window.location.href='/accounts/calendar/'">
             <p style="font-family: 'Neuton', sans-serif; color: rgb(223, 223, 223);font-weight: 700;font-size: 16px;position: absolute;margin-top: -10px;margin-left: 10px;">Calendar</p>
+        </button>
+        <button class="" onclick="toggleNav()" style="background-color: var(--color-primary);transform: translate(26vw, 50vh);height: 60px;width: 50px;border-radius: 20px;border: none;">
+            <i class="fa-solid fa-angle-right" style="color: white;font-size: 18px;margin-left: 15px;"></i>
         </button>
             <button style="background:none; border:none;"
                     onclick="toggleView()"
@@ -382,6 +388,24 @@
     // each entry logic for showing popup
     const resultEntry = document.getElementsByClassName('result-entry');
     //toggle for assignment fly-out
+    let navShown = true
+    function toggleNav() {
+        let nav = document.getElementsByClassName('nav')[0];
+        let container = document.getElementsByClassName('courseAssign')[0]
+        let header = document.getElementById("#header-img");
+        nav.classList.toggle('hide');
+        if (navShown === true) {
+            container.style.marginLeft = "180ox";
+            header.style.width = "100vw";
+            header.style.transform = "translate(0px, -92px)";
+
+        } else {
+            container.style.marginLeft = "-61px";
+            header.style.width = "1437px";
+            header.style.transform = "translate(283px, -53px)";
+        }
+        navShown = !navShown;
+    }
     function toggleEntry(id) {
         const entryPName = document.getElementById('entryName');
         const entryPDue = document.getElementById('entryDue');
