@@ -1,7 +1,10 @@
-# assignMe
-School assignment manager made with Python/Django/MySQL as a backend, and HTML/CSS/JS as frontend--wrapped in a Docker container (I intend to deploy this to a webserver). WIP.
+<img width="150" alt="image" src="https://github.com/user-attachments/assets/459a2e1e-0ac8-4b71-a860-8938cb6b5a6e" />
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/B85vgXKiDNA?si=HH0UuQOF8qPEkm3j" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+# assignMe
+#### School assignment manager made with Python/Django/MySQL as a backend, and HTML/CSS/JS as frontend--wrapped in a Docker container. Works with Canvas and Blackboard. WIP.
+<img width="721" alt="image" src="https://github.com/user-attachments/assets/d96dbf05-b0e5-40ee-8ed2-0a9e8fb7cb6f" /> <img height="598" alt="image" src="https://github.com/user-attachments/assets/b4236b0a-ec52-4c7b-9580-165a6751591c" />
+
+Take a look at how it works -> https://www.youtube.com/embed/B85vgXKiDNA?si=HH0UuQOF8qPEkm3j
 
 ## Requirements:
 ``docker`` and ``docker-compose`` are required dependencies.
