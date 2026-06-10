@@ -21,7 +21,16 @@ body {
     margin-top:20px;
     padding:3px;
 }
-
+#lmsURL {
+    font-family: "Neuton", sans-serif;
+    font-weight: 600;
+    font-size:16px;
+    border-radius:5px;
+    background-color: #bfbdb3;
+    border: none;
+    margin-top:20px;
+    padding:3px;
+}
 #button {
     background-color: #bfbdb3;
     color: #262624;
@@ -49,6 +58,13 @@ body {
     align-items: center;
     margin-top:20%;
     animation: popup 3s forwards;
+}
+
+#screen-1 {
+    animation: popup 1s forwards;
+}
+#screen-2 {
+    animation: popup 1s forwards;
 }
 
 @keyframes popup {

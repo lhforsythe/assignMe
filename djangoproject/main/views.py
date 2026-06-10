@@ -116,17 +116,17 @@ def filter(request):
             aclass.save()
         return render(request, "filter/false.html", {'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=10), 'today': (datetime.now().date()) - timedelta(days=1), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user)})
 
-def get_module_info(user_session, curAssign, assignmentID, classID):
+def get_module_info(user_session, curAssign, assignmentID, classID, lmsURL):
     entries = Modules.objects
     sessionCookies = {
         "canvas_session": user_session
     }
 
-    moduleData = requests.get("https://canvas.liberty.edu/api/v1/courses/" + str(classID) + "/module_item_sequence?asset_type=Assignment&asset_id=" + str(assignmentID), cookies=sessionCookies).json()
+    moduleData = requests.get(lmsURL + "/api/v1/courses/" + str(classID) + "/module_item_sequence?asset_type=Assignment&asset_id=" + str(assignmentID), cookies=sessionCookies).json()
     try: # basically, if it can't find any module item associated with assignment, just skip it rather than halting the whole program. This occured for me for some reason, not sure if this is a real issue in production though.
         moduleID = moduleData["modules"][0]["id"]
         moduleItems = requests.get(
-            "https://canvas.liberty.edu/api/v1/courses/" + str(classID) + "/modules/" + str(moduleID) + "/items",
+            lmsURL + "/api/v1/courses/" + str(classID) + "/modules/" + str(moduleID) + "/items",
             cookies=sessionCookies).json()
     except IndexError:
         moduleItems = [{"title": "No module information present.", "html_url": "", "type": "None"}]
@@ -140,7 +140,7 @@ def get_module_info(user_session, curAssign, assignmentID, classID):
         itemData.type = item["type"]
         itemData.save()
 
-def get_assignments_canvas(request, user_session):
+def get_assignments_canvas(request, user_session, lmsURL):
     sessionCookies = {
         "canvas_session": user_session
     }
@@ -149,7 +149,7 @@ def get_assignments_canvas(request, user_session):
     assignments.filter(course_id__user=request.user).delete()
     for aclass in classes:
         assignData = requests.get(
-            "https://canvas.liberty.edu/api/v1/courses/"
+            lmsURL + "/api/v1/courses/"
             + str(aclass.course_id)
             + "/assignments?per_page=100",
             cookies=sessionCookies, ).json()
@@ -159,7 +159,7 @@ def get_assignments_canvas(request, user_session):
             curAssign.type = assignment["submission_types"][0]
             curAssign.total_points = assignment["points_possible"]
             curAssign.url = assignment["html_url"]
-            #get_module_info(user_session, curAssign, assignment["id"], aclass.course_id)
+            #get_module_info(user_session, curAssign, assignment["id"], aclass.course_id, lmsURL)
             if assignment["due_at"] is None:
                 dueDate = datetime.strptime("2006-01-26", "%Y-%m-%d").date() - timedelta(days=1)
             else:
@@ -168,7 +168,7 @@ def get_assignments_canvas(request, user_session):
             curAssign.save()
     return HttpResponseRedirect("/accounts/dashboard/")
 
-def get_classes_canvas(data, request, user_session):
+def get_classes_canvas(data, request, user_session, lmsURL):
     entries = Classes.objects
     entries.filter(user=request.user).delete()
     for course in data:
@@ -184,23 +184,23 @@ def get_classes_canvas(data, request, user_session):
             curUser.course_id = course_id
             curUser.name = course_name
             curUser.save()
-    get_assignments_canvas(request, user_session)
+    get_assignments_canvas(request, user_session, lmsURL)
 
 def refresh(request):
     for course in Classes.objects.filter(user=request.user):
         course.delete()
     return HttpResponseRedirect("/accounts/setup/")
 
-def retrieve_data_canvas(user_session, request):
+def retrieve_data_canvas(user_session, request, lmsURL):
     sessionCookies = {
         "canvas_session": user_session
     }
     data = requests.get(
-    "https://canvas.liberty.edu/api/v1/courses/",
+    lmsURL + "/api/v1/courses/",
         cookies=sessionCookies).json()
-    get_classes_canvas(data, request, user_session)
+    get_classes_canvas(data, request, user_session, lmsURL)
 
-def get_assignments_blackboard(request, user_session):
+def get_assignments_blackboard(request, user_session, lmsURL):
     sessionCookies = {
         "BbRouter": user_session
     }
@@ -209,7 +209,7 @@ def get_assignments_blackboard(request, user_session):
     assignments.filter(course_id__user=request.user).delete()
     for aclass in classes:
         assignData = requests.get(
-            "https://bb-csuohio.blackboard.com/learn/api/public/v2/courses/"
+            lmsURL + "/learn/api/public/v2/courses/"
             + str(aclass.course_id)
             + "/gradebook/columns/",
             cookies=sessionCookies).json()["results"]
@@ -230,7 +230,7 @@ def get_assignments_blackboard(request, user_session):
             curAssign.save()
     return HttpResponseRedirect("/accounts/dashboard/")
 
-def get_classes_blackboard(data, request, user_session):
+def get_classes_blackboard(data, request, user_session, lmsURL):
     sessionCookies = {
         "BbRouter": user_session
     }
@@ -239,7 +239,7 @@ def get_classes_blackboard(data, request, user_session):
 
     for course in data:
         course_id = course["courseId"]
-        course_name = requests.get("https://bb-csuohio.blackboard.com/learn/api/public/v1/courses/" + str(course_id),
+        course_name = requests.get(lmsURL + "/learn/api/public/v1/courses/" + str(course_id),
                                    cookies=sessionCookies).json()["name"]
         if (entries.filter(user=request.user)).count() > 0:
             curUser = entries.create(user=request.user)
@@ -251,29 +251,46 @@ def get_classes_blackboard(data, request, user_session):
             curUser.course_id = course_id
             curUser.name = course_name
             curUser.save()
-    get_assignments_blackboard(request, user_session)
+    get_assignments_blackboard(request, user_session, lmsURL)
 
-def retrieve_data_blackboard(user_session, request):
+def retrieve_data_blackboard(user_session, request, lmsURL):
     sessionCookies = {
         "BbRouter": user_session
     }
     data = requests.get(
-    "https://bb-csuohio.blackboard.com/learn/api/public/v1/users/me/courses",
+    lmsURL + "/learn/api/public/v1/users/me/courses",
         cookies=sessionCookies).json()["results"]
-    get_classes_blackboard(data, request, user_session)
+    get_classes_blackboard(data, request, user_session, lmsURL)
 
 @login_required
+
+def createGenericUser(request):
+    curUser, created = Classes.objects.get_or_create(user=request.user)
+    assignments = Assignments.objects
+    assignments.filter(course_id__user=request.user).delete()
+    curUser.course_id = 000
+    curUser.name = "New Class"
+    curUser.save()
+
+    curClass = Classes.objects.filter(user=request.user)[0]
+    curAssign = assignments.create(course_id=curClass)
+    curAssign.name = "New Assignment"
+    curAssign.due = datetime.today()
+    curAssign.save()
 
 def landing(request):
     if Classes.objects.filter(user=request.user).count() < 1:
         if request.method == 'POST':
             LMS = request.POST.get('LMS')
+            lmsURL = request.POST.get('lmsURL')
             session_id = request.POST.get('session_id', '')
 
             if LMS == 'canvas':
-                retrieve_data_canvas(session_id, request)
+                retrieve_data_canvas(session_id, request, lmsURL)
             if LMS == 'blackboard':
-                retrieve_data_blackboard(session_id, request)
+                retrieve_data_blackboard(session_id, request, lmsURL)
+            if LMS == 'none': # checking whether "setup without LMS" button was clicked, since no LMS option would have been selected
+                createGenericUser(request)
                 # below is confusing, basically:
             return HttpResponseRedirect("/accounts/dashboard/") # if submit is clicked on setup load, then redirect to dashboard
         return render(request, "landing.html") # else, it should load the setup page

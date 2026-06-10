@@ -92,6 +92,9 @@ body {
 .nav.hide {
     display: none !important;
 }
+#rowIcon {
+    transform: translate(169px,67px) !important;
+}
 .assignmentContainer {
     display: flex;
     margin-left: -15px;
@@ -175,7 +178,7 @@ body {
     border: 2px solid rgb(56, 56, 55);
     color: white;
     position: fixed;
-    transform: translate(44px,40px);
+    transform: translate(50px,45px);
     border-radius: 60px;
     height: 55px;
     padding: 10px;
