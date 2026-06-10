@@ -14,13 +14,15 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 import requests
 
 modifyUser = True
-
 def main(request):
-    return render(request, "main.html", {'cur_theme': Settings.objects.get_or_create(user=request.user)[0].theme, 'user_token': Token.objects.get_or_create(user=request.user)[0], 'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=10), 'today': (datetime.now().date()) - timedelta(days=1), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
+    dueSoon = Settings.objects.get_or_create(user=request.user)[0].dueRange
+    return render(request, "main.html", {'dueSoon': dueSoon, 'cur_theme': Settings.objects.get_or_create(user=request.user)[0].theme, 'user_token': Token.objects.get_or_create(user=request.user)[0], 'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=dueSoon), 'today': (datetime.now().date()) - timedelta(days=1), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
 
 def updateSettings(request):
     settings = Settings.objects.get(user=request.user)
     if request.method == "POST":
+        dueRange = request.POST.get("dueRange")
+        settings.dueRange = dueRange
         themeSel = request.POST.get("themes")
         match themeSel:
             case "catpuccin":
@@ -104,17 +106,18 @@ def toggleView(request):
     return HttpResponse("")
 
 def filter(request):
+    dueSoon = Settings.objects.get_or_create(user=request.user)[0].dueRange
     class_entries = Classes.objects.filter(user=request.user)
     if not class_entries[0].filter:
         for aclass in class_entries:
             aclass.filter = True
             aclass.save()
-        return render(request, "filter/true.html", {'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=10), 'today': (datetime.now().date()) - timedelta(days=1), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user)})
+        return render(request, "filter/true.html", {'dueSoon': dueSoon, 'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=dueSoon), 'today': (datetime.now().date()) - timedelta(days=1), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user)})
     else:
         for aclass in class_entries:
             aclass.filter = False
             aclass.save()
-        return render(request, "filter/false.html", {'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=10), 'today': (datetime.now().date()) - timedelta(days=1), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user)})
+        return render(request, "filter/false.html", {'dueSoon': dueSoon, 'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=dueSoon), 'today': (datetime.now().date()) - timedelta(days=1), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user)})
 
 def get_module_info(user_session, curAssign, assignmentID, classID, lmsURL):
     entries = Modules.objects

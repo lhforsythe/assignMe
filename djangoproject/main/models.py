@@ -29,6 +29,7 @@ class Settings(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     headerImage = models.CharField(max_length=700, blank=True, null=True, default="default")
     theme = models.CharField(max_length=100, blank=False, null=False)
+    dueRange = models.IntegerField(max_length=2, blank=False, null=False, default=10)
     class Meta:
         managed = True
         db_table = 'settings'
