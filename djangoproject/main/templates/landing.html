@@ -23,10 +23,10 @@
                         <h3 style="padding-top:20px;">Paste your LMS session ID here:</h3><input type="radio" id="canvas" name="LMS" value="canvas"><label for="canvas">Canvas</label><br>
                         <input type="radio" id="blackboard" name="LMS" value="blackboard"><label for="blackboard">Blackboard</label><br>
                         <input type="text" id="sessionID" placeholder="i.e. 8hf82hf28hf2..." name="session_id">
+                        <!--<input type="hidden" name="LMS" value="none" checked>--> <!--used as a fallback for the radio buttons for use when no LMS is provided (i.e. setup without LMS button is clicked)-->
                         <br>
                         <input id="button" type="submit" value="Submit">
                     </div>
-                    <input type="hidden" name="LMS" value="none"> <!--used as a fallback for the radio buttons for use when no LMS is provided (i.e. setup without LMS button is clicked)-->
                     <button type="submit" id="skipLMS" style="background-color: #bfbdb373;color: #262624;font-size: 15px;border: none;border-radius: 30px;font-family: &quot;Neuton&quot;, sans-serif;font-weight: 600;margin-top: 25px;padding: 8px 23px 8px 23px;transform: translate(94px, -60px);position: fixed;" >Set Up Without LMS &gt;&gt;</button>
                 </div>
             </form>

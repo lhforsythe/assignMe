@@ -290,9 +290,9 @@ def landing(request):
 
             if LMS == 'canvas':
                 retrieve_data_canvas(session_id, request, lmsURL)
-            if LMS == 'blackboard':
+            elif LMS == 'blackboard':
                 retrieve_data_blackboard(session_id, request, lmsURL)
-            if LMS == 'none': # checking whether "setup without LMS" button was clicked, since no LMS option would have been selected
+            elif LMS == 'none': # checking whether "setup without LMS" button was clicked, since no LMS option would have been selected
                 createGenericUser(request)
                 # below is confusing, basically:
             return HttpResponseRedirect("/accounts/dashboard/") # if submit is clicked on setup load, then redirect to dashboard
