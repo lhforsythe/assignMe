@@ -55,7 +55,8 @@ def api(request):
             for assignment in Assignments.objects.filter(course_id=course.key):
                 assignList.append({
                     'title': assignment.name,
-                    'days_until_due': (assignment.due - date.today()).days
+                    'days_until_due': (assignment.due - date.today()).days,
+                    'completed': assignment.completed
                 })
     else:
         assignList.append({'error': "data must be retrieved via GET request"})
