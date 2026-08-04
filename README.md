@@ -2,7 +2,8 @@
 
 # assignMe
 #### School assignment manager made with Python/Django/MySQL as a backend, and HTML/CSS/JS as frontend--wrapped in a Docker container. Works with Canvas and Blackboard. WIP.
-<img width="721" alt="image" src="https://github.com/user-attachments/assets/d96dbf05-b0e5-40ee-8ed2-0a9e8fb7cb6f" /> <img height="598" alt="image" src="https://github.com/user-attachments/assets/b4236b0a-ec52-4c7b-9580-165a6751591c" />
+<img width="1718" height="973" alt="image" src="https://github.com/user-attachments/assets/5c355bdb-5995-46ff-accb-f744d6622514" />
+<img height="598" alt="image" src="https://github.com/user-attachments/assets/b4236b0a-ec52-4c7b-9580-165a6751591c" /><img width="721" alt="image" src="https://github.com/user-attachments/assets/d96dbf05-b0e5-40ee-8ed2-0a9e8fb7cb6f" />
 
 Take a look at how it works -> https://www.youtube.com/embed/B85vgXKiDNA?si=HH0UuQOF8qPEkm3j
 
