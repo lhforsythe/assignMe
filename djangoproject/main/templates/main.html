@@ -130,7 +130,7 @@
         <i class="fa-solid fa-arrow-up-from-bracket" style="color: white;transform: translate(1324px,127px);font-size: 19px;position: absolute;"></i>
     </button>
     <form id="changeHeaderForm" action="/accounts/dashboard/changeHeader" method="POST">
-        <input type="text" name="url" id="headerInput" style="position: absolute;transform: translate(797px,126px);width: 178px;background-color: #262624;border: 2px solid rgb(56, 56, 55);color: white;border-radius: 10px;padding: 10px;max-height: 3px; display:none;">
+        <input type="text" placeholder="https://..." name="url" id="headerInput" style="position: absolute;transform: translate(797px,126px);width: 178px;background-color: var(--color-primary);border: 2px solid var(--color-secondary);color: white;border-radius: 10px;padding: 10px;max-height: 3px; display:none;">
     </form>
     <button class="" style="background-color: var(--color-primary);transform: translate(-20px, 50vh);height: 60px;width: 50px;border-radius: 20px;border: none;position: fixed;z-index: 1;" onclick="toggleNav()">
             <i class="fa-solid fa-angle-right" style="color: white;font-size: 18px;margin-left: 15px;"></i>
@@ -170,7 +170,7 @@
         <a target="_blank" href="/accounts/refresh"><i id="refreshIcon" class="fa-solid fa-arrows-rotate" style="transform: translate(325px,24px); color: white; opacity: 0.9;position: fixed;"></i></a>
         <input type="text" placeholder="search here..." class="search-stuff" id="search">
         <div id="search-results"></div>
-    <button onclick="toggleSettings()" class="" style="border: 2px solid rgb(56, 56, 55);color: white;position: fixed;transform: translate(325px,839px);border-radius: 60px;height: 46px;padding: 10px;background-color: var(--color-secondary);">
+    <button onclick="toggleSettings()" class="" style="border: 2px solid var(--color-secondary);color: white;position: fixed;transform: translate(325px,839px);border-radius: 60px;height: 46px;padding: 10px;background-color: var(--color-secondary);">
             <i class="fa-solid fa-gear" style="font-size: 17px;"></i>
         </button>
     </div>

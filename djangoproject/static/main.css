@@ -175,7 +175,7 @@ body {
   transform: translate(52px,-8px);
 }
 .add-stuff {
-    border: 2px solid rgb(56, 56, 55);
+    border: 2px solid var(--color-secondary);
     color: white;
     position: fixed;
     transform: translate(50px,45px);
@@ -189,7 +189,7 @@ body {
     transform: translate(32px,97px);
     width: 311px;
     background-color: var(--color-secondary);
-    border: 2px solid rgb(56, 56, 55);
+    border: 2px solid var(--color-secondary);
     color: white;
     border-radius: 10px;
     padding: 10px;
@@ -199,13 +199,13 @@ body {
     position: fixed;
   transform: translate(31.5px,128px);
   background-color: var(--color-secondary);
-  border-left: 2px solid rgb(56, 56, 55);
+  border-left: 2px solid var(--color-secondary);
   color: white;
   border-radius: 0px 0px 10px 10px;
     padding-left: 10px;
   padding-right: 13px;
-  border-right: 2px solid rgb(56, 56, 55);
-  border-bottom: 2px solid rgb(56, 56, 55);
+  border-right: 2px solid var(--color-secondary);
+  border-bottom: 2px solid var(--color-secondary);
   width: 308px;
   z-index: 998;
     max-height: 500px;
@@ -325,7 +325,7 @@ transform: translate(573px,-811px);
 .dashboard-btn {
     transform: translate(33px,313px);
   width: 335px;
-  border: 2px solid rgb(56, 56, 55);
+  border: 2px solid var(--color-secondary);
   color: white;
   border-radius: 10px;
   padding: 10px;
@@ -336,7 +336,7 @@ transform: translate(573px,-811px);
 .calendar-btn {
     transform: translate(33px,377px);
   width: 335px;
-  border: 2px solid rgb(56, 56, 55);
+  border: 2px solid var(--color-secondary);
   color: white;
   border-radius: 10px;
   padding: 10px;
