@@ -20,10 +20,11 @@
                         <button type="button" onclick="next()" id="button">Next</button>
                     </div>
                     <div id="screen-2" style="display: none;">
-                        <h3 style="padding-top:20px;">Paste your LMS session ID here:</h3><input type="radio" id="canvas" name="LMS" value="canvas"><label for="canvas">Canvas</label><br>
+                        <h3 style="padding-top:20px;">Paste your LMS session ID here:</h3>
+                        <input type="radio" id="canvas" name="LMS" value="canvas"><label for="canvas">Canvas</label><br>
                         <input type="radio" id="blackboard" name="LMS" value="blackboard"><label for="blackboard">Blackboard</label><br>
                         <input type="text" id="sessionID" placeholder="i.e. 8hf82hf28hf2..." name="session_id">
-                        <!--<input type="hidden" name="LMS" value="none" checked>--> <!--used as a fallback for the radio buttons for use when no LMS is provided (i.e. setup without LMS button is clicked)-->
+                        <input type="radio" name="LMS" value="none" checked style="display:none;"> <!--used as a fallback for the radio buttons for use when no LMS is provided (i.e. setup without LMS button is clicked)-->
                         <br>
                         <input id="button" type="submit" value="Submit">
                     </div>
