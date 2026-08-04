@@ -60,7 +60,7 @@ body.yousai{ /* this color palet was derived from Aditya Shakya (@adi1090x), I d
     --color-text: #f4dede;
     --color-selected: #3d1414;
     --color-text-background: #674f4f;
-    background-color: #F5E7DEFF;
+    background-color: var(--color-secondary);
 }
 body {
     font-family: "Neuton", sans-serif;
