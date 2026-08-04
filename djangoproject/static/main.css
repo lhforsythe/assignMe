@@ -53,13 +53,13 @@ body.rosepine {
     background-color:var(--color-secondary);
 }
 body.yousai{ /* this color palet was derived from Aditya Shakya (@adi1090x), I didn't come up with this */
-    --color-green: #a3da67;
-    --color-primary: #EBDCD2FF;
-    --color-assignments: #D97742FF;
-    --color-secondary: #D97742FF;
-    --color-text: #F5E7DEFF;
-    --color-selected: #d9997f;
-    --color-text-background: #D97742FF;
+    --color-green: #912f2f;
+    --color-primary: #1c0000;
+    --color-assignments: #1c0000;
+    --color-secondary: #230505;
+    --color-text: #f4dede;
+    --color-selected: #3d1414;
+    --color-text-background: #674f4f;
     background-color: #F5E7DEFF;
 }
 body {
