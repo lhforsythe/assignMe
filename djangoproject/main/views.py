@@ -162,7 +162,7 @@ def get_assignments_canvas(request, user_session, lmsURL):
             curAssign.type = assignment["submission_types"][0]
             curAssign.total_points = assignment["points_possible"]
             curAssign.url = assignment["html_url"]
-            #get_module_info(user_session, curAssign, assignment["id"], aclass.course_id, lmsURL)
+            get_module_info(user_session, curAssign, assignment["id"], aclass.course_id, lmsURL)
             if assignment["due_at"] is None:
                 dueDate = datetime.strptime("2006-01-26", "%Y-%m-%d").date() - timedelta(days=1)
             else:
