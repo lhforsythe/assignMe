@@ -11,7 +11,7 @@
     <div id="container">
         <div id="content">
             <h1>Let's get your assignments added:</h1>
-            <form action="" method="POST" onsubmit="return load()">
+            <form action="" method="POST" onsubmit="load()">
                 {% csrf_token %}
                 <div id="form">
                     <div id="screen-1">
@@ -33,7 +33,7 @@
             </form>
         </div>
     </div>
-    <div class="loader" style="display:none;"></div>
+    <div class="loader" style="display:none;margin-top: -670px;"></div>
     <script>
         let content = document.getElementById("container");
         let loader = document.getElementById("loader");

@@ -15,9 +15,11 @@ import requests
 
 modifyUser = True
 def main(request):
-    dueSoon = Settings.objects.get_or_create(user=request.user)[0].dueRange
-    return render(request, "main.html", {'dueSoon': dueSoon, 'cur_theme': Settings.objects.get_or_create(user=request.user)[0].theme, 'user_token': Token.objects.get_or_create(user=request.user)[0], 'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=dueSoon), 'today': (datetime.now().date()) - timedelta(days=1), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
-
+    try:
+        dueSoon = Settings.objects.get_or_create(user=request.user)[0].dueRange
+        return render(request, "main.html", {'dueSoon': dueSoon, 'cur_theme': Settings.objects.get_or_create(user=request.user)[0].theme, 'user_token': Token.objects.get_or_create(user=request.user)[0], 'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=dueSoon), 'today': (datetime.now().date()) - timedelta(days=1), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
+    except TypeError:
+        return HttpResponseRedirect("/accounts/login/")
 def updateSettings(request):
     settings = Settings.objects.get(user=request.user)
     if request.method == "POST":
@@ -300,8 +302,10 @@ def landing(request):
         return render(request, "landing.html") # else, it should load the setup page
     return HttpResponseRedirect("/accounts/dashboard/") # otherwise, if there is one or more classes attributed to user, then redirect to dashboard
 def calendar(request):
-    return render(request, "calendar.html", {'cur_theme': Settings.objects.get(user=request.user).theme, 'user_token': Token.objects.get_or_create(user=request.user)[0], 'userID': request.user.id, 'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=10), 'today': (datetime.now().date()) - timedelta(days=1), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
-
+    try:
+        return render(request, "calendar.html", {'cur_theme': Settings.objects.get(user=request.user).theme, 'user_token': Token.objects.get_or_create(user=request.user)[0], 'userID': request.user.id, 'headerURL': Settings.objects.get_or_create(user=request.user)[0].headerImage, 'week': (datetime.now().date()) + timedelta(days=10), 'today': (datetime.now().date()) - timedelta(days=1), 'courses': Classes.objects.filter(user=request.user), 'assignments': Assignments.objects.filter(course_id__user=request.user), 'isRow': Classes.objects.filter(user=request.user).first().isRow})
+    except TypeError:
+        return HttpResponseRedirect("/accounts/login/")
 def addAssignment(request):
     if request.method == 'POST':
         courseId = request.POST.get('course')

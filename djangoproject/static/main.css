@@ -268,7 +268,9 @@ body {
     border-radius: 9px;
     font-weight: bold;
 }
-
+.addAssignment {
+    overflow: scroll;
+}
 .addAssignmentContainer.show {
     display: block !important;
     animation: popup 0.5s forwards;
