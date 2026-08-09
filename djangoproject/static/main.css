@@ -270,6 +270,7 @@ body {
 }
 .addAssignment {
     overflow: scroll;
+    transform: translate(27vw, 26vh) !important;
 }
 .addAssignmentContainer.show {
     display: block !important;
