@@ -99,6 +99,7 @@ body {
     display: flex;
     margin-left: -15px;
     max-width: 901px;
+    min-width: 901px;
 }
 .assignments {
     display: grid;
@@ -253,7 +254,7 @@ body {
     padding: 9px;
     border-radius: 9px;
     font-weight: 600;
-    position: absolutgreene;
+    position: absolute;
     transform: translate(472px, -11px);
     font-size: 21px;
     font-family: Verdana, sans-serif;
