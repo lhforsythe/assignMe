@@ -391,7 +391,7 @@
     });
     // each entry logic for showing popup
     const resultEntry = document.getElementsByClassName('result-entry');
-    //toggle for assignment fly-out
+    //toggle for navigation fly-out
     let navShown = true
     function toggleNav() {
         let nav = document.getElementsByClassName('nav')[0];
@@ -400,12 +400,12 @@
         nav.classList.toggle('hide');
         if (navShown === true) {
             container.style.marginLeft = "180px";
-            container.style.marginTop = "-340px";
+            container.style.marginTop = "50px";
             header.style.width = "100vw";
-            header.style.transform = "translate(-8px, -92px)";
+            header.style.transform = "translate(-8px, -67px)";
 
         } else {
-            container.style.marginLeft = "-61px";
+            container.style.marginLeft = "510px";
             container.style.marginTop = "50px";
             header.style.width = "1437px";
             header.style.transform = "translate(283px, -53px)";

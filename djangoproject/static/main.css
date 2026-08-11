@@ -78,7 +78,8 @@ body {
 }
 .courseAssign {
   margin-top: 50px;
-  margin-left: -61px;
+  margin-left: 510px;
+  position: absolute;
 }
 .container div.nav {
     display:block;
@@ -320,12 +321,23 @@ body {
     100% {opacity: 100%;}
 }
 #calendar {
-transform: translate(573px,-811px);
+transform: translate(20px,-869px);
   color: white;
   width: 1100px;
   height: 740px;
   position: absolute;
 }
+
+.fc .fc-button-primary {
+    background-color: var(--color-selected) !important;
+    border-color: rgba(0,0,0,0) !important;
+}
+
+.fc .fc-button-primary:hover {
+    background-color: var(--color-primary) !important;
+    border-color: rgba(0,0,0,0) !important;
+}
+
 .dashboard-btn {
     transform: translate(33px,313px);
   width: 335px;
