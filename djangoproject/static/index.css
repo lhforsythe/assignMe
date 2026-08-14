@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&display=swap');
 /* desktop */
-@media (min-width: 805px) {
+@media (min-width: 801px) {
     .nav-container {
         list-style-type: none;
         display: flex;
@@ -76,14 +76,17 @@
     }
 
     .main-image {
-        width: 957px;
+        width: 87vw;
         margin: auto;
+        margin-top: auto;
         margin-top: auto;
         border-radius: 36px;
         border: #1c1717 solid 8px;
         margin-top: 431px;
-        background-image: url('main.png');
-    }
+        background-image: url('https://github.com/lhforsythe/assignMe/blob/master/assets/main.png?raw=true');
+        height: 75vh;
+        background-size: cover;
+  }
 
     .nav {
         text-decoration: none;
@@ -99,6 +102,7 @@
         border-radius: 100px;
         margin-top: -20px;
         border: none;
+        margin-left: 20px;
     }
 
     a {
@@ -106,7 +110,6 @@
     }
 
     body {
-        overflow: hidden;
         font-family: "Neuton", sans-serif;
         font-weight: 600;
         background-color: #262624;
@@ -201,7 +204,7 @@
         border-radius: 36px;
         border: #1c1717 solid 8px;
         margin-top: 763px;
-        background-image: url('mobile.png');
+        background-image: url('https://github.com/lhforsythe/assignMe/blob/master/assets/mobile.png?raw=true');
         height: 82vh;
         background-repeat: no-repeat;
         background-size: cover;
