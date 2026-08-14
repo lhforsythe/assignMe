@@ -1,0 +1,97 @@
+{% load allauth account %}
+{% block content %}
+<div id="container">
+    <div id="content">
+        <h1>Login:</h1>
+            {% if not SOCIALACCOUNT_ONLY %}
+                {% setvar link %}
+                    <a href="{{ signup_url }}">
+                    {% endsetvar %}
+                    {% setvar end_link %}
+                    </a>
+                {% endsetvar %}
+
+                {% url 'account_login' as login_url %}
+                {% element form form=form method="post" action=login_url tags="entrance,login" %}
+                    {% slot body %}
+                        {% csrf_token %}
+                        {% element fields form=form unlabeled=True %}
+                        {% endelement %}
+                        {{ redirect_field }}
+                    {% endslot %}
+                    {% slot actions %}
+                        {% element button type="submit" id="button" tags="prominent,login" %}
+                            Login
+                        {% endelement %}
+                    {% endslot %}
+                {% endelement %}
+            {% endif %}
+            {% if SOCIALACCOUNT_ENABLED %}
+                {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+    </div>  {% endif %}
+</div>
+{% endblock content %}
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&display=swap');
+    body {
+        font-family: "Neuton", sans-serif;
+        font-weight: 600;
+        background-color:#262624;
+        color: white;
+    }
+    #container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 32vh;
+        animation: popup 3s forwards;
+    }
+    #content {
+        background-color: #30302e;
+        border-radius: 30px;
+        padding: 25px 150px 50px;
+        color: #eae8df;
+    }
+    @keyframes popup {
+    0% {opacity: 0%;}
+    100% {opacity: 100%;}
+    }
+    #button {
+        background-color: #bfbdb3;
+        color: #262624;
+        font-size: 15px;
+        border: none;
+        border-radius:30px;
+        font-family: "Neuton", sans-serif;
+        font-weight: 600;
+        margin-top:10px;
+        padding: 8px 23px 8px 23px;
+    }
+    #id_login {
+        font-family: "Neuton", sans-serif;
+        font-weight: 600;
+        font-size:16px;
+        border-radius:5px;
+        background-color: #bfbdb3;
+        border: none;
+        margin-top:20px;
+        padding:3px;
+        margin-left:5px;
+    }
+    #id_password {
+        font-family: "Neuton", sans-serif;
+        font-weight: 600;
+        font-size:16px;
+        border-radius:5px;
+        background-color: #bfbdb3;
+        border: none;
+        margin-top:20px;
+        margin-left:5px;
+        padding:3px;
+    }
+    a {
+        color: white;
+        margin-left: 5px;
+    }
+</style>

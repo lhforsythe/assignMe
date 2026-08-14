@@ -128,7 +128,7 @@
 </div>
 </div>
 <div class="container">
-    <img style="object-fit: cover;max-height: 225px;width: 1437px;position: absolute;transform: translate(283px,-53px);z-index: -999;" src="{{ headerURL }}">
+    <img id="header-img" style="object-fit: cover;max-height: 225px;width: 1437px;position: absolute;transform: translate(283px,-53px);z-index: -999;" src="{{ headerURL }}">
     <button onclick="toggleHeader()" style="background:none;border:none;">
         <i class="fa-solid fa-arrow-up-from-bracket" style="color: white;transform: translate(1117px,127px);font-size: 19px;position: absolute;"></i>
     </button>
@@ -318,11 +318,12 @@
     let navShown = true
     function toggleNav() {
         let nav = document.getElementsByClassName('nav')[0];
-        let container = document.getElementById("calendar");
+        let container = document.getElementById("courseAssign");
         let header = document.getElementById("header-img");
         nav.classList.toggle('hide');
         if (navShown === true) {
-            container.style.transform = "translate(-180px,-869px);"
+            container.style.marginLeft = "161px";
+            container.style.marginTop = "50px";
             header.style.width = "100vw";
             header.style.transform = "translate(-8px, -67px)";
 
