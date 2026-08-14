@@ -1,0 +1,133 @@
+{% load allauth i18n %}
+{% block content %}
+<div id="container">
+    <div id="content">
+        <h1>Sign up:</h1>
+            {% setvar link %}
+                <a href="{{ login_url }}">
+                {% endsetvar %}
+                {% setvar end_link %}
+                </a>
+            {% endsetvar %}
+            {% element p %}
+                {% blocktranslate %}Already have an account? Then please{{ link }}sign in{{ end_link }}.{% endblocktranslate %}
+            {% endelement %}
+            {% if not SOCIALACCOUNT_ONLY %}
+                {% url 'account_signup' as action_url %}
+                {% element form form=form method="post" action=action_url tags="entrance,signup" %}
+                    {% slot body %}
+                        {% csrf_token %}
+                        {% element fields form=form unlabeled=True %}
+                        {% endelement %}
+                        {{ redirect_field }}
+                    {% endslot %}
+                    {% slot actions %}
+                        {% element button tags="prominent,signup" id="button" type="submit" %}
+                            {% trans "Sign Up" %}
+                        {% endelement %}
+                    {% endslot %}
+                {% endelement %}
+            {% endif %}
+            {% if SOCIALACCOUNT_ENABLED %}
+                {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
+            {% endif %}
+    </div>
+</div>
+{% endblock content %}
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Neuton:ital,wght@0,200;0,300;0,400;0,700;0,800;1,400&display=swap');
+    body {
+        font-family: "Neuton", sans-serif;
+        font-weight: 600;
+        background-color:#262624;
+        color: white;
+    }
+    #container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20vh;
+        animation: popup 3s forwards;
+    }
+    #content {
+        background-color: #30302e;
+        border-radius: 30px;
+        padding: 25px 150px 50px;
+        color: #eae8df;
+    }
+    @keyframes popup {
+    0% {opacity: 0%;}
+    100% {opacity: 100%;}
+    }
+    #button {
+        background-color: #bfbdb3;
+        color: #262624;
+        font-size: 15px;
+        border: none;
+        border-radius:30px;
+        font-family: "Neuton", sans-serif;
+        font-weight: 600;
+        margin-top:10px;
+        padding: 8px 23px 8px 23px;
+    }
+    #id_email {
+        font-family: "Neuton", sans-serif;
+        font-weight: 600;
+        font-size:16px;
+        border-radius:5px;
+        background-color: #bfbdb3;
+        border: none;
+        margin-top:20px;
+        padding:3px;
+        margin-left:5px;
+    }
+    #id_username {
+        font-family: "Neuton", sans-serif;
+        font-weight: 600;
+        font-size:16px;
+        border-radius:5px;
+        background-color: #bfbdb3;
+        border: none;
+        margin-top:20px;
+        margin-left:5px;
+        padding:3px;
+    }
+    #id_username {
+        font-family: "Neuton", sans-serif;
+        font-weight: 600;
+        font-size:16px;
+        border-radius:5px;
+        background-color: #bfbdb3;
+        border: none;
+        margin-top:20px;
+        margin-left:5px;
+        padding:3px;
+    }
+    #id_password1 {
+        font-family: "Neuton", sans-serif;
+        font-weight: 600;
+        font-size:16px;
+        border-radius:5px;
+        background-color: #bfbdb3;
+        border: none;
+        margin-top:20px;
+        margin-left:5px;
+        padding:3px;
+    }
+    #id_password2 {
+        font-family: "Neuton", sans-serif;
+        font-weight: 600;
+        font-size:16px;
+        border-radius:5px;
+        background-color: #bfbdb3;
+        border: none;
+        margin-top:20px;
+        margin-left:5px;
+        padding:3px;
+    }
+    a {
+        color: white;
+        margin-left: 5px;
+    }
+</style>
