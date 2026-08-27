@@ -3,9 +3,9 @@ services:
     image: mysql:8.0.45-debian
     container_name: assignMe_mysql
     environment:
-      MYSQL_ROOT_PASSWORD: iusearchbtw
+      MYSQL_ROOT_PASSWORD: 
       MYSQL_USER: admin
-      MYSQL_PASSWORD: Snowbell1!
+      MYSQL_PASSWORD: 
       MYSQL_DATABASE: user_data
     ports:
       - "3306:3306"
