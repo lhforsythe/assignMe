@@ -87,7 +87,8 @@ body {
     margin:-15px;
     border-radius:0px 30px 0px 0px;
     background-color: var(--color-primary);
-    min-height: 110vh;
+    min-height: 102vh;
+    position: fixed;
     z-index: 1;
 }
 .nav.hide {
