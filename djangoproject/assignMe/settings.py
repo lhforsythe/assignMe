@@ -20,12 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-vf5kmcr6l1jjv6cgd@2a%-s71%o(img@6n9!79wp0cp__jo#56"
+SECRET_KEY = ""
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['132.226.52.147', 'localhost']
+ALLOWED_HOSTS = ['localhost']
 
 # Application definition
 
@@ -91,7 +91,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "user_data",
         "USER": "admin",
-        "PASSWORD": "Snowbell1!",
+        "PASSWORD": "",
         "HOST": "mysql",
         "PORT": "3306",
         "CONN_MAX_AGE": 0,
@@ -153,6 +153,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 LOGIN_REDIRECT_URL = '/accounts/setup'
 
 #trusted origin
-CSRF_TRUSTED_ORIGINS = ['https://0.0.0.0:8000', 'http://132.226.52.147', 'http://assignme.fyi']
+CSRF_TRUSTED_ORIGINS = ['https://0.0.0.0:8000']
 
 # add socialaccount_providers setting for Google and I guess Discord if I do end up using that as auth method
